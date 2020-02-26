@@ -2,7 +2,7 @@ package ultraime.game.dominia.desktop;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
-import ultraime.game.dominia.DominiaGame;
+
 import ultraime.game.dominia.ecran.EcranManager;
 
 public class DesktopLauncher {
