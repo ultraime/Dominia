@@ -8,6 +8,6 @@ public class Caracteristique {
 	public int resistChaleur = 20;
 	public int resistFroid = 20;
 	public int force = 20;
-	
+	public int intelligence = 20;
 	
 }

@@ -12,7 +12,7 @@ import com.ultraime.game.gdxtraime.parametrage.Parametre;
 public class EcranManager extends EcranManagerAbstract {
 
 	public EcranPrincipal ecranPrincipal;
-
+	public EcranTest ecranTest;
 
 	@Override
 	public void create() {
@@ -22,6 +22,8 @@ public class EcranManager extends EcranManagerAbstract {
 
 		ecranPrincipal = new EcranPrincipal();
 //		initialiserEcran(ecranPrincipal);
+
+		ecranTest = new EcranTest();
 
 		initialiserEcran(ecranPrincipal);
 		ecranActuel.create(this);
