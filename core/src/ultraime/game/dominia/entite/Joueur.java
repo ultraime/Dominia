@@ -8,6 +8,8 @@ public class Joueur {
 
 	public Joueur(final int id) {
 		this.id = id;
+		this.caracteristiqueDeBase = new Caracteristique();
+		this.caracteristiqueMoyenne = new Caracteristique();
 	}
 
 }

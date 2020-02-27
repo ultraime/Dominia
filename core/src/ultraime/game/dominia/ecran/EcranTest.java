@@ -34,8 +34,13 @@ public class EcranTest extends Ecran {
 	public void render() {
 		Gdx.gl.glClearColor(0, 0, 0, 0);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		int nb = this.jeuService.zones[0][0].getPersonnageFromJoueur(0);
-		System.err.println(nb);
+//		int nb = this.jeuService.zones[0][0].getNbPersonnageFromJoueur(0);
+//		System.err.println(nb);
+//		System.err.println(this.jeuService.zones[0][0].getCaracteristiqueMoyenFromJoueur(0));
+
+//		System.err.println(this.jeuService.zones[0][0].getNbPersonnageFromJoueur(0));
+		this.jeuService.zones[0][0].gererNaissance(0, this.jeuService.zones[0][0].getCaracteristiqueMoyenFromJoueur(0));
+		this.jeuService.zones[0][0].gererVie(0);
 	}
 
 	@Override

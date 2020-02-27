@@ -9,5 +9,46 @@ public class Caracteristique {
 	public int resistFroid = 20;
 	public int force = 20;
 	public int intelligence = 20;
-	
+
+	public Caracteristique() {
+	}
+
+	@Override
+	public String toString() {
+		return "Caracteristique [vitalite=" + vitalite + ", fertilite=" + fertilite + ", migration=" + migration
+				+ ", resistChaleur=" + resistChaleur + ", resistFroid=" + resistFroid + ", force=" + force
+				+ ", intelligence=" + intelligence + "]";
+	}
+
+	public void clear() {
+		this.vitalite = 0;
+		this.fertilite = 0;
+		this.migration = 0;
+		this.resistChaleur = 0;
+		this.resistFroid = 0;
+		this.force = 0;
+		this.intelligence = 0;
+	}
+
+	public void addition(final Caracteristique caracteristique) {
+		this.vitalite += caracteristique.vitalite;
+		this.fertilite += caracteristique.fertilite;
+		this.migration += caracteristique.migration;
+		this.resistChaleur += caracteristique.resistChaleur;
+		this.resistFroid += caracteristique.resistFroid;
+		this.force += caracteristique.force;
+		this.intelligence += caracteristique.intelligence;
+	}
+
+	public void divisionStats(int diviseur) {
+		this.vitalite = this.vitalite / diviseur;
+		this.fertilite = this.fertilite / diviseur;
+		this.migration = this.migration / diviseur;
+		this.resistChaleur = this.resistChaleur / diviseur;
+		this.resistFroid = this.resistFroid / diviseur;
+		this.force = this.force / diviseur;
+		this.intelligence = this.intelligence / diviseur;
+
+	}
+
 }

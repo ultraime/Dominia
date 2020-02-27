@@ -4,6 +4,7 @@ public class Personnage {
 
 	public int idJoueur;
 	public Caracteristique caracteristique;
+	public int nbPersonnage;
 
 	/**
 	 * @param idJoueur
@@ -19,7 +20,7 @@ public class Personnage {
 	 */
 	public boolean perdreVie() {
 		boolean isMort = false;
-		this.caracteristique.vitalite -= 1;
+		this.caracteristique.vitalite--;
 		if (this.caracteristique.vitalite <= 0) {
 			isMort = true;
 		}

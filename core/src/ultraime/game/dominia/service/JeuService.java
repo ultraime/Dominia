@@ -29,8 +29,8 @@ public class JeuService {
 
 		Joueur joueur = this.joueurs.get(0);
 		Personnage personnage = new Personnage(joueur.id, joueur.caracteristiqueDeBase);
-
-		zones[0][0].addPersonnage(personnage, 200);
+		personnage.nbPersonnage = 200;
+		zones[0][0].addPersonnage(personnage);
 	}
 
 	public JeuService() {
