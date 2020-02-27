@@ -4,7 +4,9 @@ public class Personnage {
 
 	public int idJoueur;
 	public Caracteristique caracteristique;
-	public int nbPersonnage;
+	public double nbPersonnage;
+
+	public int age;
 
 	/**
 	 * @param idJoueur
@@ -13,6 +15,7 @@ public class Personnage {
 	public Personnage(final int idJoueur, final Caracteristique caracteristique) {
 		this.idJoueur = idJoueur;
 		this.caracteristique = caracteristique;
+		this.age = this.caracteristique.vitalite;
 	}
 
 	/**
@@ -20,8 +23,8 @@ public class Personnage {
 	 */
 	public boolean perdreVie() {
 		boolean isMort = false;
-		this.caracteristique.vitalite--;
-		if (this.caracteristique.vitalite <= 0) {
+		this.age--;
+		if (this.age <= 0) {
 			isMort = true;
 		}
 		return isMort;

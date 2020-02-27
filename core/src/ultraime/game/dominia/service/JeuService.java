@@ -24,9 +24,9 @@ public class JeuService {
 	}
 
 	public void creerZone() {
-		zones = new Zone[1][1];
+		zones = new Zone[2][1];
 		zones[0][0] = new Zone();
-
+		zones[1][0] = new Zone();
 		Joueur joueur = this.joueurs.get(0);
 		Personnage personnage = new Personnage(joueur.id, joueur.caracteristiqueDeBase);
 		personnage.nbPersonnage = 200;

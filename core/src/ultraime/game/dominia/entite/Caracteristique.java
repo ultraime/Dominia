@@ -2,8 +2,8 @@ package ultraime.game.dominia.entite;
 
 public class Caracteristique {
 
-	public int vitalite = 20;
-	public int fertilite = 20;
+	public int vitalite = 15;
+	public int fertilite = 25;
 	public int migration = 20;
 	public int resistChaleur = 20;
 	public int resistFroid = 20;
@@ -11,6 +11,16 @@ public class Caracteristique {
 	public int intelligence = 20;
 
 	public Caracteristique() {
+	}
+
+	public Caracteristique(final Caracteristique caracteristique) {
+		this.vitalite = caracteristique.vitalite;
+		this.fertilite = caracteristique.fertilite;
+		this.migration = caracteristique.migration;
+		this.resistChaleur = caracteristique.resistChaleur;
+		this.resistFroid = caracteristique.resistFroid;
+		this.force = caracteristique.force;
+		this.intelligence = caracteristique.intelligence;
 	}
 
 	@Override
@@ -41,6 +51,9 @@ public class Caracteristique {
 	}
 
 	public void divisionStats(int diviseur) {
+		if (diviseur == 0) {
+			diviseur = 1;
+		}
 		this.vitalite = this.vitalite / diviseur;
 		this.fertilite = this.fertilite / diviseur;
 		this.migration = this.migration / diviseur;
