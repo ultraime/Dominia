@@ -49,7 +49,7 @@ public class EcranTest extends Ecran {
 				final Caracteristique caracteristique = this.jeuService.zones[x][y]
 						.getCaracteristiqueMoyenFromJoueur(0);
 				this.jeuService.zones[x][y].gererNaissance(0, caracteristique);
-				this.jeuService.zones[x][y].gererVie(0);
+//				this.jeuService.zones[x][y].gererVie(0);
 				this.jeuService.zones[x][y].gererMigration(0, this.jeuService.zones, x, y);
 				
 				DecimalFormat decimalPrintFormat = new DecimalFormat("#,##0");
@@ -57,9 +57,9 @@ public class EcranTest extends Ecran {
 				nbPerso =  decimalPrintFormat.format(this.jeuService.zones[x][y].getNbPersonnageFromJoueur(0));
 				System.out.println("Boucle : " + BOUCLE + " population zone[" + x + "][" + y + "] = "
 						+nbPerso );
-
 			}
 		}
+		System.out.println("=====================================");
 	}
 	@Override
 	public void dispose() {

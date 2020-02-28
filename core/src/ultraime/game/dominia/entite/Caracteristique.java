@@ -2,8 +2,8 @@ package ultraime.game.dominia.entite;
 
 public class Caracteristique {
 
-	public int vitalite = 15;
-	public int fertilite = 25;
+	public int vitalite = 20;
+	public int fertilite = 20;
 	public int migration = 20;
 	public int resistChaleur = 20;
 	public int resistFroid = 20;

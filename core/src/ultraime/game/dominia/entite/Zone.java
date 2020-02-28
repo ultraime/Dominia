@@ -16,67 +16,35 @@ public class Zone {
 	 * Règle : nb nouveau perso = [1 à X% fertilité]/100 + 1]
 	 * 
 	 * @param idJoueur
-	 * @param caracteristique
-	 *            (moyenne)
+	 * @param caracteristique (moyenne)
 	 */
 	public void gererNaissance(final int idJoueur, final Caracteristique caracteristique) {
 
 		double nbPersonnage = getNbPersonnageFromJoueur(idJoueur);
-
 		if (nbPersonnage > 0) {
-			float reducteur = 0.5f;
-			if (nbPersonnage > 100000) {
-				reducteur -= 0.1f;
-			}
-			if (nbPersonnage > 1000000) {
-				reducteur -= 0.02f;
-			}
-			if (nbPersonnage > 3000000) {
-				reducteur -= 0.02f;
-			}
-			if (nbPersonnage > 5000000) {
-				reducteur -= 0.05f;
-			}
-			if (nbPersonnage > 10000000) {
-				reducteur -= 0.05f;
-			}
-			if (nbPersonnage > 20000000) {
-				reducteur -= 0.05f;
-			}
-			if (nbPersonnage > 30000000) {
-				reducteur -= 0.03f;
-			}
-			int maxFertilite = (int) (caracteristique.fertilite * reducteur);
-			if (maxFertilite <= 0) {
-				maxFertilite = 1;
-			}
 			int diviseurMinFertil = 2;
-
+			int maxFertilite = caracteristique.fertilite;
 			int minfertilite = maxFertilite / diviseurMinFertil + 1;
-			float nbRandom = new Random().nextInt(maxFertilite) + minfertilite;
-			// int diviseur = 3;
-			//
-			// if (nbPersonnage > 500000) {
-			// diviseur += 1;
-			// }
-			// if (nbPersonnage > 3000000) {
-			// diviseur += 2;
-			// }
-			// if (nbPersonnage > 10000000) {
-			// diviseur += 2;
-			// }
-			// if (nbPersonnage > 15000000) {
-			// diviseur += 2;
-			// }
-			// nbRandom = nbRandom / diviseur;
-
-			double nbNewPersonnages = (int) (((nbPersonnage * nbRandom) / 100) + 1);
-			// System.err.println(nbNewPersonnages);
+			double nbNewPersonnages = new Random().nextInt(maxFertilite) + minfertilite;
+			nbNewPersonnages += getNbListePersonnageFromJoueur(idJoueur);
 			Caracteristique caracteristiqueNew = new Caracteristique(caracteristique);
-			Personnage personnage = new Personnage(idJoueur, caracteristiqueNew);
-
-			personnage.nbPersonnage = nbNewPersonnages;
-			addPersonnage(personnage);
+			List<Personnage> personnagesMort = gererVie(idJoueur);
+			if (personnagesMort.size() > 0) {
+				personnagesMort.get(0).nbPersonnage += nbNewPersonnages;
+				personnagesMort.get(0).caracteristique = caracteristiqueNew;
+				personnagesMort.get(0).age = caracteristiqueNew.vitalite;
+				personnagesMort.remove(0);
+				for (int i = 0; i < personnagesMort.size(); i++) {
+					Personnage personnageMort = personnagesMort.get(i);
+					final Caracteristique caracteristiqueNew2 = new Caracteristique(caracteristique);
+					personnageMort.caracteristique = caracteristiqueNew2;
+					personnageMort.age = caracteristiqueNew2.vitalite;
+				}
+			} else {
+				Personnage personnage = new Personnage(idJoueur, caracteristiqueNew);
+				personnage.nbPersonnage = nbNewPersonnages;
+				addPersonnage(personnage);
+			}
 		}
 	}
 
@@ -84,18 +52,16 @@ public class Zone {
 	 * @param idJoueur
 	 * @param caracteristique
 	 * @param zones
-	 * @param x
-	 *            -> de la zone actuel
-	 * @param y
-	 *            -> de la zone actuel Règle : Pour chaque groupe: % chance de
-	 *            migrer = [ X% migration]/100 + 1]
+	 * @param x               -> de la zone actuel
+	 * @param y               -> de la zone actuel Règle : Pour chaque groupe: %
+	 *                        chance de migrer = [ X% migration]/100 + 1]
 	 */
 	public void gererMigration(final int idJoueur, Zone[][] zones, final int x, final int y) {
 		List<Personnage> personnages = getPersonnageFromJoueur(idJoueur).collect(Collectors.toList());
 		for (int i = 0; i < personnages.size(); i++) {
 			Personnage perso = personnages.get(i);
-			float pourcentageMigration = perso.caracteristique.migration / 100 + 1;
-			float nbRandom = new Random().nextInt(100) + 1;
+			int pourcentageMigration = perso.caracteristique.migration +1;
+			int nbRandom = new Random().nextInt(100000) + 1;
 			if (pourcentageMigration >= nbRandom) {
 				boolean exit = false;
 				do {
@@ -115,7 +81,7 @@ public class Zone {
 		}
 	}
 
-	public void gererVie(final int idJoueur) {
+	private List<Personnage> gererVie(final int idJoueur) {
 		List<Personnage> personnages = getPersonnageFromJoueur(idJoueur).collect(Collectors.toList());
 		List<Personnage> personnagesMort = new ArrayList<Personnage>();
 		for (int i = 0; i < personnages.size(); i++) {
@@ -124,7 +90,7 @@ public class Zone {
 				personnagesMort.add(personnages.get(i));
 			}
 		}
-		listPersonage.removeAll(personnagesMort);
+		return personnagesMort;
 
 	}
 
