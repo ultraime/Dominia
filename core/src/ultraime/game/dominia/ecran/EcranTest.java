@@ -56,7 +56,7 @@ public class EcranTest extends Ecran {
 					final Caracteristique caracteristique = this.jeuService.zones[x][y]
 							.getCaracteristiqueMoyenFromJoueur(idJoueur);
 					if(	caracteristique.fertilite > 1) {
-						System.err.println("population zone[" + x + "][" + y + "] ="+caracteristique);
+//						System.err.println("population zone[" + x + "][" + y + "] ="+caracteristique);
 					}
 					this.jeuService.zones[x][y].gererNaissance(idJoueur, joueur.ameliorations, caracteristique);
 				
@@ -66,11 +66,11 @@ public class EcranTest extends Ecran {
 					String nbPerso = "";
 					nbPerso = decimalPrintFormat
 							.format(this.jeuService.zones[x][y].getNbPersonnageFromJoueur(idJoueur));
-//					System.out.println("Boucle : " + BOUCLE + " population zone[" + x + "][" + y + "] = " + nbPerso);
+					System.out.println("Boucle : " + BOUCLE + " population zone[" + x + "][" + y + "] = " + nbPerso);
 				}
 			}
-//			System.out.println("Boucle : " + BOUCLE + " Nombre total de personnage : "
-//					+ decimalPrintFormat.format(this.jeuService.getAllPersonnageFromJoueur(idJoueur)));
+			System.out.println("Boucle : " + BOUCLE + " Nombre total de personnage : "
+					+ decimalPrintFormat.format(this.jeuService.getAllPersonnageFromJoueur(idJoueur)));
 
 		}
 	}

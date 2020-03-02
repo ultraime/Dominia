@@ -2,8 +2,10 @@ package ultraime.game.dominia.entite;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.OptionalInt;
 import java.util.Random;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 public class Zone {
@@ -17,7 +19,8 @@ public class Zone {
 	 * 
 	 * @param idJoueur
 	 * @param ameliorations
-	 * @param caracteristique (moyenne)
+	 * @param caracteristique
+	 *            (moyenne)
 	 */
 	public void gererNaissance(final int idJoueur, final List<Amelioration> ameliorations,
 			final Caracteristique caracteristique) {
@@ -46,31 +49,37 @@ public class Zone {
 			} else {
 				Personnage personnage = new Personnage(idJoueur, caracteristiqueNew);
 				personnage.nbPersonnage = nbNewPersonnages;
-				gererBonusADN(personnage, ameliorations);
 				addPersonnage(personnage);
+				gererBonusADNnew(personnage, ameliorations);
 			}
 		}
 	}
 
-	private void gererBonusADN(Personnage personnage, List<Amelioration> ameliorations) {
+	private void gererBonusADNnew(Personnage personnage, List<Amelioration> ameliorations) {
 		List<Personnage> personnages = getPersonnageFromJoueur(0).collect(Collectors.toList());
-		if (personnages.size() == 1) {
-			for (int i = 0; i < ameliorations.size(); i++) {
-				final Amelioration ameliorationRef = ameliorations.get(i);
-				if (!personnage.ameliorations.contains(ameliorationRef)) {
-//					if(personnage.caracteristique.)
-					//si le perso à déja des stats plus élevé que celles requises -> pas d'augmentation :/.
-					personnage.ameliorations.add(ameliorationRef);
+
+		OptionalInt indexOpt = IntStream.range(0, personnages.size()).filter(i -> personnage.equals(personnages.get(i)))
+				.findFirst();
+		final int nb = indexOpt.getAsInt() - 1;
+		final Personnage personnageParent = personnages.get(nb);
+		for (int i = 0; i < ameliorations.size(); i++) {
+			final Amelioration ameliorationRef = ameliorations.get(i);
+			if (!personnage.ameliorations.contains(ameliorationRef)) {
+				if (!personnageParent.ameliorations.contains(ameliorationRef)) {
 					personnage.caracteristique.addition(ameliorationRef.caracteristique);
 				}
+				personnage.ameliorations.add(ameliorationRef);
 			}
-		} else {
-			for (int i = 0; i < ameliorations.size(); i++) {
-				final Amelioration ameliorationRef = ameliorations.get(i);
-				if (!personnage.ameliorations.contains(ameliorationRef)) {
-					personnage.ameliorations.add(ameliorationRef);
-					personnage.caracteristique.addition(ameliorationRef.caracteristique);
-				}
+		}
+
+	}
+
+	private void gererBonusADN(Personnage personnage, List<Amelioration> ameliorations) {
+		for (int i = 0; i < ameliorations.size(); i++) {
+			final Amelioration ameliorationRef = ameliorations.get(i);
+			if (!personnage.ameliorations.contains(ameliorationRef)) {
+				personnage.ameliorations.add(ameliorationRef);
+				personnage.caracteristique.addition(ameliorationRef.caracteristique);
 			}
 		}
 	}
@@ -79,9 +88,11 @@ public class Zone {
 	 * @param idJoueur
 	 * @param caracteristique
 	 * @param zones
-	 * @param x               -> de la zone actuel
-	 * @param y               -> de la zone actuel Règle : Pour chaque groupe: %
-	 *                        chance de migrer = [ X% migration]/100 + 1]
+	 * @param x
+	 *            -> de la zone actuel
+	 * @param y
+	 *            -> de la zone actuel Règle : Pour chaque groupe: % chance de
+	 *            migrer = [ X% migration]/100 + 1]
 	 */
 	public void gererMigration(final int idJoueur, Zone[][] zones, final int x, final int y) {
 		List<Personnage> personnages = getPersonnageFromJoueur(idJoueur).collect(Collectors.toList());

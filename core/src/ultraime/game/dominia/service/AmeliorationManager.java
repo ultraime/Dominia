@@ -14,7 +14,7 @@ public class AmeliorationManager {
 		// hormone fertile
 		final Caracteristique caracteristique = new Caracteristique();
 		caracteristique.clear();
-		caracteristique.fertilite = 5;
+		caracteristique.fertilite = 3;
 		final Amelioration amelioration = new Amelioration(caracteristique, "hotmaone fertile", 1);
 		ameliorations.add(amelioration);
 

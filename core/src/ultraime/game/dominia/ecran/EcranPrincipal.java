@@ -40,27 +40,37 @@ public class EcranPrincipal extends Ecran {
 		skin = new Skin(Gdx.files.internal("ui-editor/neonuiblue/neonuiblue.json"));
 		stage = new Stage(new ScreenViewport());
 
-		TextButton button = new TextButton(label, skin);
-//		button.getLabel().setFontScale(2, 2);
-		button.setWidth(250);
-		button.setHeight(50);
+		TextButton buttonLancerPartie = new TextButton(label, skin);
+		buttonLancerPartie.setWidth(250);
+		buttonLancerPartie.setHeight(50);
 
-//		button.setPosition(752, 600);
 		final EcranManager ecran = (EcranManager) ecranManager;
-		button.addListener(new ClickListener() {
+		buttonLancerPartie.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				ecran.ecranTest.create(ecran);
 				ecran.initialiserEcran(ecran.ecranTest);
 			}
 		});
-
+		String label2 = Parametre.bundle.get("txt.menu.start.test");
+		TextButton buttonLancerPartieEcran = new TextButton(label2, skin);
+		buttonLancerPartieEcran.setWidth(250);
+		buttonLancerPartieEcran.setHeight(50);
+		buttonLancerPartieEcran.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				ecran.ecranTestEcran.create(ecran);
+				ecran.initialiserEcran(ecran.ecranTestEcran);
+			}
+		});
 		// table
 		Table table = new Table();
 		table.setFillParent(true);
 		table.setDebug(Parametre.MODE_DEBUG);
 
-		table.add(button).width(button.getWidth()).height(button.getHeight());
+		table.add(buttonLancerPartie).width(buttonLancerPartieEcran.getWidth()).height(buttonLancerPartieEcran.getHeight()).pad(buttonLancerPartieEcran.getHeight());
+		table.row();
+		table.add(buttonLancerPartieEcran).width(buttonLancerPartieEcran.getWidth()).height(buttonLancerPartieEcran.getHeight());
 		stage.addActor(table);
 
 //		stage.addActor(button);

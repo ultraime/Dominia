@@ -13,7 +13,7 @@ public class EcranManager extends EcranManagerAbstract {
 
 	public EcranPrincipal ecranPrincipal;
 	public EcranTest ecranTest;
-
+	public EcranTestEcran ecranTestEcran;
 	@Override
 	public void create() {
 		Parametre.initLangue();
@@ -24,6 +24,7 @@ public class EcranManager extends EcranManagerAbstract {
 //		initialiserEcran(ecranPrincipal);
 
 		ecranTest = new EcranTest();
+		ecranTestEcran = new EcranTestEcran();
 
 		initialiserEcran(ecranPrincipal);
 		ecranActuel.create(this);
