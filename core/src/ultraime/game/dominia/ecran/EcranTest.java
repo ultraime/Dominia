@@ -11,6 +11,7 @@ import com.ultraime.game.gdxtraime.ecran.EcranManagerAbstract;
 
 import ultraime.game.dominia.entite.Caracteristique;
 import ultraime.game.dominia.entite.Joueur;
+import ultraime.game.dominia.service.AmeliorationManager;
 import ultraime.game.dominia.service.JeuService;
 
 /**
@@ -31,8 +32,9 @@ public class EcranTest extends Ecran {
 		this.ecranManager = (EcranManager) ecranManager;
 		this.batch = new SpriteBatch();
 		this.jeuService = new JeuService();
-		this.jeuService.creerJoueurs(2);
+		this.jeuService.creerJoueurs(1);
 		this.jeuService.creerZone();
+		AmeliorationManager.initList();
 	}
 
 	@Override
@@ -41,6 +43,9 @@ public class EcranTest extends Ecran {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 		BOUCLE++;
+		if (BOUCLE == 20) {
+			this.jeuService.joueurs.get(0).ameliorations.add(AmeliorationManager.ameliorations.get(0));
+		}
 		DecimalFormat decimalPrintFormat = new DecimalFormat("#,##0");
 		for (int i = 0; i < this.jeuService.joueurs.size(); i++) {
 			final Joueur joueur = this.jeuService.joueurs.get(i);
@@ -50,18 +55,22 @@ public class EcranTest extends Ecran {
 				for (int y = 0; y < this.jeuService.zones[x].length; y++) {
 					final Caracteristique caracteristique = this.jeuService.zones[x][y]
 							.getCaracteristiqueMoyenFromJoueur(idJoueur);
-					this.jeuService.zones[x][y].gererNaissance(idJoueur, caracteristique);
+					if(	caracteristique.fertilite > 1) {
+						System.err.println("population zone[" + x + "][" + y + "] ="+caracteristique);
+					}
+					this.jeuService.zones[x][y].gererNaissance(idJoueur, joueur.ameliorations, caracteristique);
+				
 //				this.jeuService.zones[x][y].gererVie(0);
 					this.jeuService.zones[x][y].gererMigration(idJoueur, this.jeuService.zones, x, y);
 
 					String nbPerso = "";
 					nbPerso = decimalPrintFormat
 							.format(this.jeuService.zones[x][y].getNbPersonnageFromJoueur(idJoueur));
-					System.out.println("Boucle : " + BOUCLE + " population zone[" + x + "][" + y + "] = " + nbPerso);
+//					System.out.println("Boucle : " + BOUCLE + " population zone[" + x + "][" + y + "] = " + nbPerso);
 				}
 			}
-			System.out.println("Boucle : " + BOUCLE + " Nombre total de personnage : "
-					+ decimalPrintFormat.format(this.jeuService.getAllPersonnageFromJoueur(idJoueur)));
+//			System.out.println("Boucle : " + BOUCLE + " Nombre total de personnage : "
+//					+ decimalPrintFormat.format(this.jeuService.getAllPersonnageFromJoueur(idJoueur)));
 
 		}
 	}

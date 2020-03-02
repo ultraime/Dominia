@@ -20,9 +20,9 @@ public class JeuService {
 		for (int i = 0; i < nbJoueur; i++) {
 			final Joueur j = new Joueur(i);
 			if(i == 1) {
-				j.caracteristiqueDeBase.fertilite = 35;
-				j.caracteristiqueDeBase.vitalite = 10;
-				j.caracteristiqueDeBase.migration = 30;
+//				j.caracteristiqueDeBase.fertilite = 35;
+//				j.caracteristiqueDeBase.vitalite = 10;
+//				j.caracteristiqueDeBase.migration = 30;
 			}
 			joueurs.add(j);
 		}

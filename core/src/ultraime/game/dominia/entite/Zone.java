@@ -16,9 +16,11 @@ public class Zone {
 	 * Règle : nb nouveau perso = [1 à X% fertilité]/100 + 1]
 	 * 
 	 * @param idJoueur
+	 * @param ameliorations
 	 * @param caracteristique (moyenne)
 	 */
-	public void gererNaissance(final int idJoueur, final Caracteristique caracteristique) {
+	public void gererNaissance(final int idJoueur, final List<Amelioration> ameliorations,
+			final Caracteristique caracteristique) {
 
 		double nbPersonnage = getNbPersonnageFromJoueur(idJoueur);
 		if (nbPersonnage > 0) {
@@ -33,6 +35,7 @@ public class Zone {
 				personnagesMort.get(0).nbPersonnage += nbNewPersonnages;
 				personnagesMort.get(0).caracteristique = caracteristiqueNew;
 				personnagesMort.get(0).age = caracteristiqueNew.vitalite;
+				gererBonusADN(personnagesMort.get(0), ameliorations);
 				personnagesMort.remove(0);
 				for (int i = 0; i < personnagesMort.size(); i++) {
 					Personnage personnageMort = personnagesMort.get(i);
@@ -43,7 +46,31 @@ public class Zone {
 			} else {
 				Personnage personnage = new Personnage(idJoueur, caracteristiqueNew);
 				personnage.nbPersonnage = nbNewPersonnages;
+				gererBonusADN(personnage, ameliorations);
 				addPersonnage(personnage);
+			}
+		}
+	}
+
+	private void gererBonusADN(Personnage personnage, List<Amelioration> ameliorations) {
+		List<Personnage> personnages = getPersonnageFromJoueur(0).collect(Collectors.toList());
+		if (personnages.size() == 1) {
+			for (int i = 0; i < ameliorations.size(); i++) {
+				final Amelioration ameliorationRef = ameliorations.get(i);
+				if (!personnage.ameliorations.contains(ameliorationRef)) {
+//					if(personnage.caracteristique.)
+					//si le perso à déja des stats plus élevé que celles requises -> pas d'augmentation :/.
+					personnage.ameliorations.add(ameliorationRef);
+					personnage.caracteristique.addition(ameliorationRef.caracteristique);
+				}
+			}
+		} else {
+			for (int i = 0; i < ameliorations.size(); i++) {
+				final Amelioration ameliorationRef = ameliorations.get(i);
+				if (!personnage.ameliorations.contains(ameliorationRef)) {
+					personnage.ameliorations.add(ameliorationRef);
+					personnage.caracteristique.addition(ameliorationRef.caracteristique);
+				}
 			}
 		}
 	}
@@ -60,7 +87,7 @@ public class Zone {
 		List<Personnage> personnages = getPersonnageFromJoueur(idJoueur).collect(Collectors.toList());
 		for (int i = 0; i < personnages.size(); i++) {
 			Personnage perso = personnages.get(i);
-			int pourcentageMigration = perso.caracteristique.migration +1;
+			int pourcentageMigration = perso.caracteristique.migration + 1;
 			int nbRandom = new Random().nextInt(100000) + 1;
 			if (pourcentageMigration >= nbRandom) {
 				boolean exit = false;

@@ -1,11 +1,15 @@
 package ultraime.game.dominia.entite;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Personnage {
 
 	public int idJoueur;
 	public Caracteristique caracteristique;
 	public double nbPersonnage;
 
+	public List<Amelioration> ameliorations = new ArrayList<Amelioration>();
 	public int age;
 
 	/**
