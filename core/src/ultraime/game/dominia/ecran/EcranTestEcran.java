@@ -5,13 +5,17 @@ import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Container;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.SplitPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
@@ -23,9 +27,10 @@ import com.ultraime.game.gdxtraime.parametrage.Parametre;
  * @author ultraime Ecran de base pour d�marrer une partie
  */
 public class EcranTestEcran extends Ecran {
-	private Stage stage;
+	private Stage stageHUD;
+	private Stage stageCarte;
 	private Skin skin;
-	private OrthographicCamera camera;
+	private OrthographicCamera cameraCarte;
 
 	@Override
 	public void changerEcran(InputMultiplexer inputMultiplexer) {
@@ -34,96 +39,74 @@ public class EcranTestEcran extends Ecran {
 
 	@Override
 	public void create(final EcranManagerAbstract ecranManager) {
-		camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-		stage = new Stage();
-		stage.getViewport().setCamera(camera);
+		stageHUD = new Stage();
+
+		stageCarte = new Stage();
+		cameraCarte = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		stageCarte.getViewport().setCamera(cameraCarte);
+
 		resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		skin = new Skin(Gdx.files.internal("ui-editor/neonuiblue/neonuiblue.json"));
 
-		// Table table = new Table();
-		// table.setFillParent(true);
-		// table.setDebug(Parametre.MODE_DEBUG);
-		//
-		// table.top();
-		// table.add(new Label("E1 IMG", skin)).width(50).height(50);
-		// table.add(new Label("E1 %WIN", skin)).width(100).height(30);
-		// table.add(new Label("E2 IMG", skin)).width(50).height(50);
-		// table.add(new Label("E2 %WIN", skin)).width(100).height(30);
-		// table.add(new Label("E3 IMG", skin)).width(50).height(50);
-		// table.add(new Label("E3 %WIN", skin)).width(100).height(30);
-		// table.add(new Label("E4 IMG", skin)).width(50).height(50);
-		// table.add(new Label("E4 %WIN", skin)).width(100).height(30);
-		// table.add(new Label("E5 IMG", skin)).width(50).height(50);
-		// table.add(new Label("E5 %WIN", skin)).width(100).height(30);
-		// table.add(Actor).colspan(1).expandX();
-		// add(Actor0).colspan(1).expandX();
-
-		// table.add(new Label("MENU DROITE",
-		// skin)).width(200).height(Gdx.graphics.getHeight());
-		// table2.add(new Label("MENU DROITE",
-		// skin)).width(200).height(Gdx.graphics.getHeight());
-
-		// table.add(new Label("MENU DROITE",
-		// skin)).width(200).height(Gdx.graphics.getHeight());
-		// table.add(new Label("bonjour", skin)).width(300).height(30);
-		// stage.addActor(table);
-
-		///////// EXEMPLE//////
-		// Table table = new Table();
-		// table.defaults().pad(10F);
-		// table.setFillParent(true);
-		//
-		// Label label = new Label("PLAYER NAME", skin);
-		// label.setAlignment(Align.center);
-		//
-		// Table first_table = new Table();
-		// first_table.setDebug(true);
-		// first_table.add(new Label("FIRST TABLE", skin));
-		//
-		// Table second_table = new Table();
-		// second_table.add(new Label("SECOND TABLE", skin));
-		//
-		// table.add(label).colspan(2).fillX();
-		// table.row();
-		// table.add(first_table).expand();
-		// table.add(second_table).expand();
-		//
-		// stage.addActor(table);
-		// stage.setDebugAll(true);
-
+		// HUD
 		Table table = new Table();
-//		table.defaults().pad(10F);
 		table.setFillParent(true);
+		table.setDebug(Parametre.MODE_DEBUG);
 
-		Label label = new Label("PLAYER NAME", skin);
-//		label.setAlignment(Align.center);
-
-		Table first_table = new Table();
-		first_table.setDebug(true);
-		
-		 first_table.top();
-		 first_table.add(new Label("E1 IMG", skin)).width(50).height(50);
-		 first_table.add(new Label("E1 %WIN", skin)).width(100).height(30);
-		 first_table.add(new Label("E2 IMG", skin)).width(50).height(50);
-		 first_table.add(new Label("E2 %WIN", skin)).width(100).height(30);
-		 first_table.add(new Label("E3 IMG", skin)).width(50).height(50);
-		 first_table.add(new Label("E3 %WIN", skin)).width(100).height(30);
-		 first_table.add(new Label("E4 IMG", skin)).width(50).height(50);
-		 first_table.add(new Label("E4 %WIN", skin)).width(100).height(30);
-		 first_table.add(new Label("E5 IMG", skin)).width(50).height(50);
-		 first_table.add(new Label("E5 %WIN", skin)).width(100).height(30);
-		
-		
-//		first_table.add(new Label("FIRST TABLE", skin));
-
-		Table second_table = new Table();
-		second_table.add(new Label("SECOND TABLE", skin));
 		table.top();
-		table.add(first_table).width(Gdx.graphics.getWidth() - 300).expandY();
-		//table.add(second_table).expand();
+		table.add().expandX().fillX();
+		table.add(new Label("E1 IMG", skin)).width(50).height(50);
+		table.add(new Label("E1 %WIN", skin)).width(100).height(30);
+		table.add(new Label("E2 IMG", skin)).width(50).height(50);
+		table.add(new Label("E2 %WIN", skin)).width(100).height(30);
+		table.add(new Label("E3 IMG", skin)).width(50).height(50);
+		table.add(new Label("E3 %WIN", skin)).width(100).height(30);
+		table.add(new Label("E4 IMG", skin)).width(50).height(50);
+		table.add(new Label("E4 %WIN", skin)).width(100).height(30);
+		table.add(new Label("E5 IMG", skin)).width(50).height(50);
+		table.add(new Label("E5 %WIN", skin)).width(100).height(30);
+		table.add().expandX().fillX();
+		table.row();
 
-		stage.addActor(table);
-		stage.setDebugAll(true);
+		stageHUD.addActor(table);
+		stageHUD.setDebugAll(Parametre.MODE_DEBUG);
+
+		// STAGE CARTE
+		Table tableCarte = new Table();
+		tableCarte.setDebug(Parametre.MODE_DEBUG);
+		tableCarte.setFillParent(true);
+		tableCarte.top();
+		tableCarte.add().expandX().fillX().height(50);
+
+		final Texture zone_normal_base1 = new Texture(Gdx.files.internal("carte/zone_normal_base1.png"));
+		final Texture zone_glace_base1 = new Texture(Gdx.files.internal("carte/zone_glace_base1.png"));
+		final Texture zone_chaude_base1 = new Texture(Gdx.files.internal("carte/zone_chaude_base1.png"));
+
+		final Texture eau1 = new Texture(Gdx.files.internal("carte/eau1.png"));
+		for (int i = 0; i < 14; i++) {
+			tableCarte.row();
+			tableCarte.add().expandX().fillX();
+			for (int j = 0; j < 25; j++) {
+//				final Image image = new Image(eau1);
+//				tableCarte.add(image).width(64).height(64);
+				if ((i == 1 && (j == 1 || j == 2)) || (i == 2 && (j == 1 || j == 2))) {
+					final Image image = new Image(zone_glace_base1);
+					tableCarte.add(image).width(64).height(64);
+//					tableCarte.add(new Label("[" + i + "][" + j + "]", skin)).width(64).height(64);
+				} else if ((i == 2 && (j == 7 || j == 8)) || (i == 3 && (j == 7 || j == 8)) || (i == 3 && j== 9) || (i == 1 && j== 7)) {
+					final Image image = new Image(zone_glace_base1);
+					tableCarte.add(image).width(64).height(64);
+//					tableCarte.add(new Label("[" + i + "][" + j + "]", skin)).width(64).height(64);
+				}
+
+				else {
+					tableCarte.add(new Label("[" + i + "][" + j + "]", skin)).width(64).height(64);
+				}
+
+			}
+			tableCarte.add().expandX().fillX();
+		}
+		stageCarte.addActor(tableCarte);
 
 	}
 
@@ -131,8 +114,10 @@ public class EcranTestEcran extends Ecran {
 	public void render() {
 		Gdx.gl.glClearColor(0, 0, 0, 0);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		stage.act(Gdx.graphics.getDeltaTime());
-		stage.draw();
+		stageHUD.act(Gdx.graphics.getDeltaTime());
+		stageCarte.act(Gdx.graphics.getDeltaTime());
+		stageHUD.draw();
+		stageCarte.draw();
 	}
 
 	@Override
@@ -185,7 +170,8 @@ public class EcranTestEcran extends Ecran {
 
 	@Override
 	public void resize(int width, int height) {
-		stage.getViewport().update(width, height, true);
+		stageHUD.getViewport().update(width, height, true);
+		stageCarte.getViewport().update(width, height, true);
 	}
 
 }
