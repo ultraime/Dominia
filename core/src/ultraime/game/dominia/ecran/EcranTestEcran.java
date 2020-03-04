@@ -14,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.SplitPane;
+import com.badlogic.gdx.scenes.scene2d.ui.Stack;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.utils.Align;
@@ -91,7 +92,12 @@ public class EcranTestEcran extends Ecran {
 //				tableCarte.add(image).width(64).height(64);
 				if ((i == 1 && (j == 1 || j == 2)) || (i == 2 && (j == 1 || j == 2))) {
 					final Image image = new Image(zone_glace_base1);
-					tableCarte.add(image).width(64).height(64);
+					Stack stack = new Stack();
+					stack.add(image);
+					stack.add(new Label("[" + i + "][" + j + "]", skin));
+					tableCarte.add(stack).width(64).height(64);
+//					tableCarte.add(image).width(64).height(64);
+					
 //					tableCarte.add(new Label("[" + i + "][" + j + "]", skin)).width(64).height(64);
 				} else if ((i == 2 && (j == 7 || j == 8)) || (i == 3 && (j == 7 || j == 8)) || (i == 3 && j== 9) || (i == 1 && j== 7)) {
 					final Image image = new Image(zone_glace_base1);
