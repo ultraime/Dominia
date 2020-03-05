@@ -68,9 +68,11 @@ public class EcranPrincipal extends Ecran {
 		table.setFillParent(true);
 		table.setDebug(Parametre.MODE_DEBUG);
 
-		table.add(buttonLancerPartie).width(buttonLancerPartieEcran.getWidth()).height(buttonLancerPartieEcran.getHeight()).pad(buttonLancerPartieEcran.getHeight());
+		table.add(buttonLancerPartie).width(buttonLancerPartieEcran.getWidth())
+				.height(buttonLancerPartieEcran.getHeight()).pad(buttonLancerPartieEcran.getHeight());
 		table.row();
-		table.add(buttonLancerPartieEcran).width(buttonLancerPartieEcran.getWidth()).height(buttonLancerPartieEcran.getHeight());
+		table.add(buttonLancerPartieEcran).width(buttonLancerPartieEcran.getWidth())
+				.height(buttonLancerPartieEcran.getHeight());
 		stage.addActor(table);
 
 //		stage.addActor(button);

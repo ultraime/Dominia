@@ -7,8 +7,11 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Container;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -16,6 +19,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.SplitPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Stack;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -36,13 +41,15 @@ public class EcranTestEcran extends Ecran {
 	@Override
 	public void changerEcran(InputMultiplexer inputMultiplexer) {
 		inputMultiplexer.addProcessor(this);
+		inputMultiplexer.addProcessor(stageCarte);
+		inputMultiplexer.addProcessor(stageHUD);
 	}
 
 	@Override
 	public void create(final EcranManagerAbstract ecranManager) {
 		stageHUD = new Stage();
 
-		stageCarte = new Stage();
+		stageCarte = new Stage(new ScreenViewport());
 		cameraCarte = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		stageCarte.getViewport().setCamera(cameraCarte);
 
@@ -72,6 +79,19 @@ public class EcranTestEcran extends Ecran {
 		stageHUD.addActor(table);
 		stageHUD.setDebugAll(Parametre.MODE_DEBUG);
 
+		// STAGE CARTE BACKGROUND
+		Table tableBackground = new Table();
+		tableBackground.setDebug(Parametre.MODE_DEBUG);
+		tableBackground.setFillParent(true);
+		tableBackground.top();
+		tableBackground.add().expandX().fillX().height(50);
+		tableBackground.row();
+		final Texture carteImg = new Texture(Gdx.files.internal("carte/carte.png"));
+		tableBackground.add().expandX().fillX();
+		tableBackground.add(new Image(carteImg));
+		tableBackground.add().expandX().fillX();
+		stageCarte.addActor(tableBackground);
+
 		// STAGE CARTE
 		Table tableCarte = new Table();
 		tableCarte.setDebug(Parametre.MODE_DEBUG);
@@ -84,36 +104,26 @@ public class EcranTestEcran extends Ecran {
 		final Texture zone_chaude_base1 = new Texture(Gdx.files.internal("carte/zone_chaude_base1.png"));
 
 		final Texture eau1 = new Texture(Gdx.files.internal("carte/eau1.png"));
-		for (int i = 0; i < 14; i++) {
+		for (int i = 0; i < 7; i++) {
 			tableCarte.row();
 			tableCarte.add().expandX().fillX();
-			for (int j = 0; j < 25; j++) {
-//				final Image image = new Image(eau1);
-//				tableCarte.add(image).width(64).height(64);
-				if ((i == 1 && (j == 1 || j == 2)) || (i == 2 && (j == 1 || j == 2))) {
-					final Image image = new Image(zone_glace_base1);
-					Stack stack = new Stack();
-					stack.add(image);
-					stack.add(new Label("[" + i + "][" + j + "]", skin));
-					tableCarte.add(stack).width(64).height(64);
-//					tableCarte.add(image).width(64).height(64);
-					
-//					tableCarte.add(new Label("[" + i + "][" + j + "]", skin)).width(64).height(64);
-				} else if ((i == 2 && (j == 7 || j == 8)) || (i == 3 && (j == 7 || j == 8)) || (i == 3 && j== 9) || (i == 1 && j== 7)) {
-					final Image image = new Image(zone_glace_base1);
-					tableCarte.add(image).width(64).height(64);
-//					tableCarte.add(new Label("[" + i + "][" + j + "]", skin)).width(64).height(64);
-				}
-
-				else {
-					tableCarte.add(new Label("[" + i + "][" + j + "]", skin)).width(64).height(64);
-				}
-
+			for (int j = 0; j < 13; j++) {
+				Label label = new Label("[" + i + "][" + j + "]", skin);
+				label.addListener(new ClickListener(){
+			        @Override
+			        public void clicked(InputEvent event, float x, float y) {
+			            System.out.println("clique");
+			        }
+			    });
+		
+				tableCarte.add(label).width(128).height(128);
 			}
 			tableCarte.add().expandX().fillX();
 		}
+		
 		stageCarte.addActor(tableCarte);
-
+		
+		
 	}
 
 	@Override
@@ -122,8 +132,10 @@ public class EcranTestEcran extends Ecran {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		stageHUD.act(Gdx.graphics.getDeltaTime());
 		stageCarte.act(Gdx.graphics.getDeltaTime());
+		
 		stageHUD.draw();
 		stageCarte.draw();
+		
 	}
 
 	@Override
