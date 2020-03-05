@@ -2,41 +2,36 @@ package ultraime.game.dominia.ecran;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
-import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
-import com.badlogic.gdx.scenes.scene2d.ui.Container;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.SplitPane;
-import com.badlogic.gdx.scenes.scene2d.ui.Stack;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
-import com.badlogic.gdx.utils.Align;
-import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.ultraime.game.gdxtraime.ecran.Ecran;
 import com.ultraime.game.gdxtraime.ecran.EcranManagerAbstract;
 import com.ultraime.game.gdxtraime.parametrage.Parametre;
 
+import ultraime.game.dominia.composant.LabelListenner;
+import ultraime.game.dominia.entite.Zone;
+import ultraime.game.dominia.service.AmeliorationManager;
+import ultraime.game.dominia.service.JeuService;
+
 /**
  * @author ultraime Ecran de base pour dï¿½marrer une partie
  */
-public class EcranTestEcran extends Ecran {
+public class EcranGame extends Ecran {
+
+	// Graphisme
 	private Stage stageHUD;
 	private Stage stageCarte;
 	private Skin skin;
 	private OrthographicCamera cameraCarte;
+
+	// Jeu
+	private JeuService jeuService;
 
 	@Override
 	public void changerEcran(InputMultiplexer inputMultiplexer) {
@@ -49,7 +44,7 @@ public class EcranTestEcran extends Ecran {
 	public void create(final EcranManagerAbstract ecranManager) {
 		stageHUD = new Stage();
 
-		stageCarte = new Stage(new ScreenViewport());
+		stageCarte = new Stage();
 		cameraCarte = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		stageCarte.getViewport().setCamera(cameraCarte);
 
@@ -99,43 +94,39 @@ public class EcranTestEcran extends Ecran {
 		tableCarte.top();
 		tableCarte.add().expandX().fillX().height(50);
 
-		final Texture zone_normal_base1 = new Texture(Gdx.files.internal("carte/zone_normal_base1.png"));
-		final Texture zone_glace_base1 = new Texture(Gdx.files.internal("carte/zone_glace_base1.png"));
-		final Texture zone_chaude_base1 = new Texture(Gdx.files.internal("carte/zone_chaude_base1.png"));
-
-		final Texture eau1 = new Texture(Gdx.files.internal("carte/eau1.png"));
+		// création du plateau (métier)
+		jeuService = new JeuService();
+		this.jeuService.zones = new Zone[7][13];
 		for (int i = 0; i < 7; i++) {
 			tableCarte.row();
 			tableCarte.add().expandX().fillX();
 			for (int j = 0; j < 13; j++) {
+				final Zone zone = this.jeuService.genererZone(i, j);
 				Label label = new Label("[" + i + "][" + j + "]", skin);
-				label.addListener(new ClickListener(){
-			        @Override
-			        public void clicked(InputEvent event, float x, float y) {
-			            System.out.println("clique");
-			        }
-			    });
-		
+				label.addListener(new LabelListenner(zone, i, j));
 				tableCarte.add(label).width(128).height(128);
 			}
 			tableCarte.add().expandX().fillX();
 		}
-		
 		stageCarte.addActor(tableCarte);
-		
-		
+
+		// lance le jeu
+		AmeliorationManager.initList();
+		jeuService.startGame(1);
+
 	}
 
 	@Override
 	public void render() {
 		Gdx.gl.glClearColor(0, 0, 0, 0);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		
 		stageHUD.act(Gdx.graphics.getDeltaTime());
 		stageCarte.act(Gdx.graphics.getDeltaTime());
-		
+
 		stageHUD.draw();
 		stageCarte.draw();
-		
+
 	}
 
 	@Override
@@ -190,6 +181,7 @@ public class EcranTestEcran extends Ecran {
 	public void resize(int width, int height) {
 		stageHUD.getViewport().update(width, height, true);
 		stageCarte.getViewport().update(width, height, true);
+		// viewport.update(width, height);
 	}
 
 }

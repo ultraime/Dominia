@@ -11,6 +11,11 @@ import java.util.stream.Stream;
 public class Zone {
 	private List<Personnage> listPersonage = new ArrayList<Personnage>();
 
+	/**
+	 * if actif = false = zone vide.
+	 */
+	public Boolean isActif = true;
+
 	public Zone() {
 	}
 
@@ -107,11 +112,11 @@ public class Zone {
 					int newY = randomLessToOne();
 					if (x + newX < zones.length && x + newX > -1) {
 						if (y + newY < zones[x + newX].length && y + newY > -1) {
-							this.listPersonage.remove(perso);
-							zones[x + newX][y + newY].addPersonnage(perso);
-							// System.err.println("MIGRATION DE :"+x+"-"+y +"
-							// VERS : " + (x + newX) + "-" + (y + newY));
-							exit = true;
+							if (zones[x + newX][y + newY].isActif) {
+								this.listPersonage.remove(perso);
+								zones[x + newX][y + newY].addPersonnage(perso);
+								exit = true;
+							}
 						}
 					}
 				} while (!exit);

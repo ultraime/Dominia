@@ -11,9 +11,21 @@ import com.ultraime.game.gdxtraime.parametrage.Parametre;
  */
 public class EcranManager extends EcranManagerAbstract {
 
+	/**
+	 * Menu démarrage
+	 */
 	public EcranPrincipal ecranPrincipal;
+
+	/**
+	 * pour des tests. Il n'y a pas d'ihm.
+	 */
 	public EcranTest ecranTest;
-	public EcranTestEcran ecranTestEcran;
+
+	/**
+	 * Ecran du jeu
+	 */
+	public EcranGame ecranGame;
+
 	@Override
 	public void create() {
 		Parametre.initLangue();
@@ -21,10 +33,10 @@ public class EcranManager extends EcranManagerAbstract {
 		ecranDebug = new EcranDebug(this);
 
 		ecranPrincipal = new EcranPrincipal();
-//		initialiserEcran(ecranPrincipal);
+		// initialiserEcran(ecranPrincipal);
 
 		ecranTest = new EcranTest();
-		ecranTestEcran = new EcranTestEcran();
+		ecranGame = new EcranGame();
 
 		initialiserEcran(ecranPrincipal);
 		ecranActuel.create(this);
@@ -36,9 +48,9 @@ public class EcranManager extends EcranManagerAbstract {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		ecranActuel.render();
 
-//		if (Parametre.MODE_DEBUG && this.ecranDebug != null) {
-//			this.ecranDebug.render();
-//		}
+		// if (Parametre.MODE_DEBUG && this.ecranDebug != null) {
+		// this.ecranDebug.render();
+		// }
 		this.ecranDebug.render();
 	}
 

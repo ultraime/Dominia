@@ -22,7 +22,7 @@ public class Parametre {
 	public static final String FONT = "fonts/OpenSans-Bold.fnt";
 
 	// vitesse du jeu
-	public static int VITESSE_DE_JEU = 1;
+	public static int VITESSE_DE_JEU = 3;
 	public static int VITESSE_NORMAL = 1;
 	public static int VITESSE_RAPIDE = 2;
 	public static int VITESSE_TRES_RAPIDE = 3;
@@ -42,6 +42,7 @@ public class Parametre {
 
 	// mode debug
 	public static boolean MODE_DEBUG = true;
+	public static boolean MODE_DEBUG_SYSO = true;
 	public static boolean MODE_DEBUG_ERR_DEPLACEMENT = false;
 	public static boolean MODE_DEBUG_CLICK_CASE = false;
 	public static boolean SHOW_FPS = true;
