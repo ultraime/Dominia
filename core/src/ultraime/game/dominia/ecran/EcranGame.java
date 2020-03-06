@@ -1,5 +1,7 @@
 package ultraime.game.dominia.ecran;
 
+import java.util.ArrayList;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.GL20;
@@ -26,12 +28,17 @@ public class EcranGame extends Ecran {
 
 	// Graphisme
 	private Stage stageHUD;
+	private Stage stageFond;
 	private Stage stageCarte;
 	private Skin skin;
 	private OrthographicCamera cameraCarte;
 
+	// Texture
+	final private Texture txt_j1 = new Texture(Gdx.files.internal("logo/joueur_0.png"));
+
 	// Jeu
 	private JeuService jeuService;
+	private ArrayList<Label> labelZone = new ArrayList<Label>();
 
 	@Override
 	public void changerEcran(InputMultiplexer inputMultiplexer) {
@@ -42,14 +49,24 @@ public class EcranGame extends Ecran {
 
 	@Override
 	public void create(final EcranManagerAbstract ecranManager) {
+		Parametre.PAUSE = true;
 		stageHUD = new Stage();
 
 		stageCarte = new Stage();
 		cameraCarte = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		stageCarte.getViewport().setCamera(cameraCarte);
 
+		stageFond = new Stage();
+		
 		resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		skin = new Skin(Gdx.files.internal("ui-editor/neonuiblue/neonuiblue.json"));
+		
+		//FOND
+		Table tableFond = new Table();
+		tableFond.setFillParent(true);
+		Image imgFond = new Image(new Texture(Gdx.files.internal("logo/fond.png")));
+		tableFond.add(imgFond).expand().fill();
+		stageFond.addActor(tableFond);
 
 		// HUD
 		Table table = new Table();
@@ -58,8 +75,12 @@ public class EcranGame extends Ecran {
 
 		table.top();
 		table.add().expandX().fillX();
-		table.add(new Label("E1 IMG", skin)).width(50).height(50);
-		table.add(new Label("E1 %WIN", skin)).width(100).height(30);
+		Texture barre = new Texture(Gdx.files.internal("logo/barre_1.png"));
+		Image img = new Image(new Texture(Gdx.files.internal("logo/joueur_0_logo.png")));
+		
+		table.add(img).width(50).height(50);
+		
+		table.add(new Image(barre)).width(100).height(50);
 		table.add(new Label("E2 IMG", skin)).width(50).height(50);
 		table.add(new Label("E2 %WIN", skin)).width(100).height(30);
 		table.add(new Label("E3 IMG", skin)).width(50).height(50);
@@ -103,12 +124,15 @@ public class EcranGame extends Ecran {
 			for (int j = 0; j < 13; j++) {
 				final Zone zone = this.jeuService.genererZone(i, j);
 				Label label = new Label("[" + i + "][" + j + "]", skin);
-				label.addListener(new LabelListenner(zone, i, j));
+				label.addListener(new LabelListenner(zone, i, j, this.jeuService.joueurs));
+				labelZone.add(label);
 				tableCarte.add(label).width(128).height(128);
 			}
 			tableCarte.add().expandX().fillX();
 		}
+
 		stageCarte.addActor(tableCarte);
+		
 
 		// lance le jeu
 		AmeliorationManager.initList();
@@ -120,12 +144,31 @@ public class EcranGame extends Ecran {
 	public void render() {
 		Gdx.gl.glClearColor(0, 0, 0, 0);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		
-		stageHUD.act(Gdx.graphics.getDeltaTime());
-		stageCarte.act(Gdx.graphics.getDeltaTime());
+		try {
+			for (int i = 0; i < labelZone.size(); i++) {
+				Label label = labelZone.get(i);
+				LabelListenner labelListenner = (LabelListenner) label.getListeners().first();
 
-		stageHUD.draw();
-		stageCarte.draw();
+				int idJoueur = 0;
+				if (!labelListenner.idJoueursPresent.contains(idJoueur)
+						&& labelListenner.zone.getNbListePersonnageFromJoueur(idJoueur) > 0) {
+					Image img = new Image(txt_j1);
+					img.setPosition(label.getX() + 32, label.getY() + 32);
+					stageCarte.addActor(img);
+					labelListenner.idJoueursPresent.add(idJoueur);
+				}
+
+			}
+			stageHUD.act(Gdx.graphics.getDeltaTime());
+			stageCarte.act(Gdx.graphics.getDeltaTime());
+			stageFond.act(Gdx.graphics.getDeltaTime());
+			stageFond.draw();
+			stageHUD.draw();
+			stageCarte.draw();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
 	}
 
@@ -174,6 +217,8 @@ public class EcranGame extends Ecran {
 
 	@Override
 	public boolean scrolled(int amount) {
+		cameraCarte.zoom += amount;
+		cameraCarte.update();
 		return false;
 	}
 

@@ -22,12 +22,13 @@ public class ThreadJeu implements Runnable {
 	@Override
 	public void run() {
 		do {
+			System.out.print(Parametre.PAUSE);
 			if (!Parametre.PAUSE) {
 				try {
 					if (Parametre.MODE_DEBUG_SYSO) {
 						BOUCLE++;
 					}
-					int timeToSleep = 1000/Parametre.VITESSE_DE_JEU;
+					int timeToSleep = 1000 / Parametre.VITESSE_DE_JEU;
 					Thread.sleep(timeToSleep);
 					for (int i = 0; i < this.jeuService.joueurs.size(); i++) {
 						final Joueur joueur = this.jeuService.joueurs.get(i);

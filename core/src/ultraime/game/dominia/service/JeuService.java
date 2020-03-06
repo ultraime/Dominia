@@ -24,10 +24,10 @@ public class JeuService {
 	public void startGame(final int nbJoueur) {
 		creerJoueurs(nbJoueur);
 		// Place les unités du joueurs.
-		Joueur joueur = this.joueurs.get(0);
-		Personnage personnage = new Personnage(joueur.id, joueur.caracteristiqueDeBase);
-		personnage.nbPersonnage = 200;
-		zones[2][7].addPersonnage(personnage);
+//		Joueur joueur = this.joueurs.get(0);
+//		Personnage personnage = new Personnage(joueur.id, joueur.caracteristiqueDeBase);
+//		personnage.nbPersonnage = 200;
+//		zones[2][7].addPersonnage(personnage);
 
 		ThreadJeu t = new ThreadJeu(this);
 		threadJeu = new Thread(t);
@@ -87,7 +87,7 @@ public class JeuService {
 
 		if (i == 0 && j == 0 || i == 0 && j == 11 || i == 0 && j == 12 || i == 3 && j == 0 || i == 3 && j == 1
 				|| i == 3 && j == 5 || i == 4 && j == 0 || i == 4 && j == 5 || i == 6 && j == 0 || i == 6 && j == 1
-				|| i == 6 && j == 2 || i == 6 && j == 4 || i == 6 && j == 6 || i == 6 && j == 9 || i == 6 && j == 12) {
+				|| i == 6 && j == 2 || i == 6 && j == 4 || i == 6 && j == 6 || i == 6 && j == 9 || i == 6 && j == 12|| i == 5 && j == 12) {
 			zone.isActif = false;
 		}
 

@@ -152,7 +152,7 @@ public class Zone {
 		return nbPersonnages[0];
 	}
 
-	private int getNbListePersonnageFromJoueur(final int idJoueur) {
+	public int getNbListePersonnageFromJoueur(final int idJoueur) {
 		return (int) getPersonnageFromJoueur(idJoueur).count();
 	}
 
