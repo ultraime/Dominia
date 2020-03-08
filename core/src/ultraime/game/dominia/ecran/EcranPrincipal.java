@@ -59,6 +59,7 @@ public class EcranPrincipal extends Ecran {
 		buttonLancerPartieEcran.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
+				ecran.ecranAmelioration.create(ecran);
 				ecran.ecranGame.create(ecran);
 				ecran.initialiserEcran(ecran.ecranGame);
 			}
@@ -75,7 +76,6 @@ public class EcranPrincipal extends Ecran {
 				.height(buttonLancerPartieEcran.getHeight());
 		stage.addActor(table);
 
-//		stage.addActor(button);
 		Gdx.input.setInputProcessor(stage);
 	}
 

@@ -25,6 +25,7 @@ public class EcranManager extends EcranManagerAbstract {
 	 * Ecran du jeu
 	 */
 	public EcranGame ecranGame;
+	public EcranAmelioration ecranAmelioration;
 
 	@Override
 	public void create() {
@@ -37,7 +38,8 @@ public class EcranManager extends EcranManagerAbstract {
 
 		ecranTest = new EcranTest();
 		ecranGame = new EcranGame();
-
+		ecranAmelioration = new EcranAmelioration();
+		
 		initialiserEcran(ecranPrincipal);
 		ecranActuel.create(this);
 	}

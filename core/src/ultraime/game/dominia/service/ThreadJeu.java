@@ -22,8 +22,9 @@ public class ThreadJeu implements Runnable {
 	@Override
 	public void run() {
 		do {
-			System.out.print(Parametre.PAUSE);
-			if (!Parametre.PAUSE) {
+			boolean isPause = Parametre.PAUSE;
+		
+			if (!isPause) {
 				try {
 					if (Parametre.MODE_DEBUG_SYSO) {
 						BOUCLE++;
@@ -67,6 +68,8 @@ public class ThreadJeu implements Runnable {
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
+			}else{
+				System.out.print(Parametre.PAUSE);
 			}
 		} while (Gdx.app != null);
 	}

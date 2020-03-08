@@ -7,11 +7,14 @@ import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.ultraime.game.gdxtraime.ecran.Ecran;
 import com.ultraime.game.gdxtraime.ecran.EcranManagerAbstract;
 import com.ultraime.game.gdxtraime.parametrage.Parametre;
@@ -30,6 +33,8 @@ public class EcranGame extends Ecran {
 	private Stage stageHUD;
 	private Stage stageFond;
 	private Stage stageCarte;
+	private Stage stageBoutonBas;
+
 	private Skin skin;
 	private OrthographicCamera cameraCarte;
 
@@ -45,23 +50,26 @@ public class EcranGame extends Ecran {
 		inputMultiplexer.addProcessor(this);
 		inputMultiplexer.addProcessor(stageCarte);
 		inputMultiplexer.addProcessor(stageHUD);
+		inputMultiplexer.addProcessor(stageBoutonBas);
 	}
 
 	@Override
-	public void create(final EcranManagerAbstract ecranManager) {
+	public void create(final EcranManagerAbstract ecranManagerAb) {
+		this.ecranManager = (EcranManager) ecranManagerAb;
+		
 		Parametre.PAUSE = true;
 		stageHUD = new Stage();
-
+		stageBoutonBas = new Stage();
 		stageCarte = new Stage();
 		cameraCarte = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		stageCarte.getViewport().setCamera(cameraCarte);
 
 		stageFond = new Stage();
-		
-		resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+
+		resize(1920,1080);
 		skin = new Skin(Gdx.files.internal("ui-editor/neonuiblue/neonuiblue.json"));
-		
-		//FOND
+
+		// FOND
 		Table tableFond = new Table();
 		tableFond.setFillParent(true);
 		Image imgFond = new Image(new Texture(Gdx.files.internal("logo/fond.png")));
@@ -77,9 +85,9 @@ public class EcranGame extends Ecran {
 		table.add().expandX().fillX();
 		Texture barre = new Texture(Gdx.files.internal("logo/barre_1.png"));
 		Image img = new Image(new Texture(Gdx.files.internal("logo/joueur_0_logo.png")));
-		
+
 		table.add(img).width(50).height(50);
-		
+
 		table.add(new Image(barre)).width(100).height(50);
 		table.add(new Label("E2 IMG", skin)).width(50).height(50);
 		table.add(new Label("E2 %WIN", skin)).width(100).height(30);
@@ -132,12 +140,32 @@ public class EcranGame extends Ecran {
 		}
 
 		stageCarte.addActor(tableCarte);
-		
+
+		Table tableBtnBas = new Table();
+		tableBtnBas.setDebug(Parametre.MODE_DEBUG);
+		tableBtnBas.setFillParent(true);
+		tableBtnBas.bottom();
+
+		TextButton btnMenuCarte = new TextButton(Parametre.bundle.get("txt.menu.carte"), skin);
+
+		TextButton btnMenuAmelioration = new TextButton(Parametre.bundle.get("txt.menu.amelioration"), skin);
+		btnMenuAmelioration.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				ecranManager.initialiserEcran(ecranManager.ecranAmelioration);
+			}
+		});
+
+		tableBtnBas.add(btnMenuCarte).height(50).width(200);
+		tableBtnBas.add(btnMenuAmelioration).height(50).width(200);
+
+		tableBtnBas.add().expandX().fillX();
+		stageBoutonBas.addActor(tableBtnBas);
 
 		// lance le jeu
 		AmeliorationManager.initList();
 		jeuService.startGame(1);
-
+		resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 	}
 
 	@Override
@@ -153,7 +181,7 @@ public class EcranGame extends Ecran {
 				if (!labelListenner.idJoueursPresent.contains(idJoueur)
 						&& labelListenner.zone.getNbListePersonnageFromJoueur(idJoueur) > 0) {
 					Image img = new Image(txt_j1);
-					img.setPosition(label.getX() + 32, label.getY() + 32);
+					img.setPosition(label.getX() + 16, label.getY() + 16);
 					stageCarte.addActor(img);
 					labelListenner.idJoueursPresent.add(idJoueur);
 				}
@@ -162,10 +190,13 @@ public class EcranGame extends Ecran {
 			stageHUD.act(Gdx.graphics.getDeltaTime());
 			stageCarte.act(Gdx.graphics.getDeltaTime());
 			stageFond.act(Gdx.graphics.getDeltaTime());
+			stageBoutonBas.act(Gdx.graphics.getDeltaTime());
+
 			stageFond.draw();
 			stageHUD.draw();
 			stageCarte.draw();
-			
+			stageBoutonBas.draw();
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -226,6 +257,7 @@ public class EcranGame extends Ecran {
 	public void resize(int width, int height) {
 		stageHUD.getViewport().update(width, height, true);
 		stageCarte.getViewport().update(width, height, true);
+		stageBoutonBas.getViewport().update(width, height, true);
 		// viewport.update(width, height);
 	}
 
