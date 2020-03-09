@@ -33,7 +33,8 @@ public class EcranAmelioration extends Ecran {
 	private Stage stageAmerlioration;
 	private Stage stageUpgrade;
 	private Skin skin;
-//	private ArrayList<StackAmelioration> stackAmeliorations = new ArrayList<StackAmelioration>();
+	// private ArrayList<StackAmelioration> stackAmeliorations = new
+	// ArrayList<StackAmelioration>();
 
 	@Override
 	public void changerEcran(InputMultiplexer inputMultiplexer) {
@@ -85,10 +86,52 @@ public class EcranAmelioration extends Ecran {
 			tableCase.add().width(96).height(30);
 		}
 		tableCase.row();
-
+		// premiere ligne
+		Amelioration amelioration = AmeliorationManager.ameliorationTrasnpi;
+		String image = "griffe";
 		for (int i = 0; i < 7; i++) {
-			Amelioration amelioration = AmeliorationManager.ameliorationTrasnpi;
-			String image = "griffe";
+			switch (i) {
+			case 0:
+				image = "transpiration";
+				amelioration = AmeliorationManager.ameliorationTrasnpi;
+				break;
+			case 1:
+				image = "transpiration";
+				amelioration = AmeliorationManager.ameliorationFluxSanguin;
+				break;
+			case 2:
+				image = "transpiration";
+				amelioration = AmeliorationManager.ameliorationMasseMusculaire;
+				break;
+			case 3:
+				image = "transpiration";
+				amelioration = AmeliorationManager.ameliorationHormoneFertile;
+				break;
+			case 4:
+				image = "transpiration";
+				amelioration = AmeliorationManager.ameliorationMatiereGrise;
+				break;
+			case 5:
+				image = "transpiration";
+				amelioration = AmeliorationManager.ameliorationResistance;
+				break;
+			case 6:
+				image = "transpiration";
+				amelioration = AmeliorationManager.ameliorationMigrateur;
+				break;
+			default:
+				break;
+			}
+
+			StackAmelioration stack = new StackAmelioration(image, amelioration);
+			stack.changeColorCase(StackAmelioration.BLEU);
+			stack.addListener(new StackAmeliorationListenner(stack));
+			tableCase.add(stack).width(96).height(96);
+			tableCase.add().width(96).height(96);
+		}
+		tableCase.row();
+		// 2éme ligne
+		for (int i = 0; i < 7; i++) {
 			switch (i) {
 			case 0:
 				image = "transpiration";
@@ -127,7 +170,6 @@ public class EcranAmelioration extends Ecran {
 			tableCase.add(stack).width(96).height(96);
 			tableCase.add().width(96).height(96);
 		}
-
 		stageAmerlioration.addActor(tableCase);
 
 		// stageUpgrade
@@ -138,10 +180,10 @@ public class EcranAmelioration extends Ecran {
 		Image imgCadre = new Image(new Texture(Gdx.files.internal("ui/cadre.png")));
 		tableUpgrade.add(imgCadre).height(250).width(800).padBottom(hauteur_btn);
 
-//		Button button = new Button(skin);
-//		button.setPosition(550, 40);
-//		stageUpgrade.addActor(tableUpgrade);
-//		stageUpgrade.addActor(button);
+		// Button button = new Button(skin);
+		// button.setPosition(550, 40);
+		// stageUpgrade.addActor(tableUpgrade);
+		// stageUpgrade.addActor(button);
 
 		Image imgCadre2 = new Image(new Texture(Gdx.files.internal("ui/cadre.png")));
 		imgCadre2.setPosition(560, 50);
