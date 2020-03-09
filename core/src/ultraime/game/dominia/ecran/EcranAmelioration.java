@@ -20,6 +20,9 @@ import com.ultraime.game.gdxtraime.ecran.EcranManagerAbstract;
 import com.ultraime.game.gdxtraime.parametrage.Parametre;
 
 import ultraime.game.dominia.composant.StackAmelioration;
+import ultraime.game.dominia.composant.StackAmeliorationListenner;
+import ultraime.game.dominia.entite.Amelioration;
+import ultraime.game.dominia.service.AmeliorationManager;
 
 /**
  * @author ultraime Ecran de base pour d�marrer une partie
@@ -30,7 +33,7 @@ public class EcranAmelioration extends Ecran {
 	private Stage stageAmerlioration;
 	private Stage stageUpgrade;
 	private Skin skin;
-	private ArrayList<StackAmelioration> stackAmeliorations = new ArrayList<StackAmelioration>();
+//	private ArrayList<StackAmelioration> stackAmeliorations = new ArrayList<StackAmelioration>();
 
 	@Override
 	public void changerEcran(InputMultiplexer inputMultiplexer) {
@@ -47,12 +50,12 @@ public class EcranAmelioration extends Ecran {
 		stageBoutonBas = new Stage();
 		stageAmerlioration = new Stage();
 		stageUpgrade = new Stage();
-		resize(1920,1080);
+		resize(1920, 1080);
 		skin = new Skin(Gdx.files.internal("ui-editor/neonuiblue/neonuiblue.json"));
-		//param general
+		// param general
 		int hauteur_btn = 50;
 		int largeur_btn = 200;
-		//stageBoutonBas
+		// stageBoutonBas
 		Table tableBtnBas = new Table();
 		tableBtnBas.setDebug(Parametre.MODE_DEBUG);
 		tableBtnBas.setFillParent(true);
@@ -73,38 +76,79 @@ public class EcranAmelioration extends Ecran {
 		tableBtnBas.add().expandX().fillX();
 		stageBoutonBas.addActor(tableBtnBas);
 
-		
-		//stageAmerlioration
+		// stageAmerlioration
 		Table tableCase = new Table();
 		tableCase.setDebug(Parametre.MODE_DEBUG);
 		tableCase.setFillParent(true);
+		tableCase.top();
+		for (int i = 0; i < 14; i++) {
+			tableCase.add().width(96).height(30);
+		}
+		tableCase.row();
 
-		StackAmelioration stack = new StackAmelioration("griffe");
-		stack.changeColorCase(StackAmelioration.BLEU);
-		tableCase.add(stack).width(96).height(96);
+		for (int i = 0; i < 7; i++) {
+			Amelioration amelioration = AmeliorationManager.ameliorationTrasnpi;
+			String image = "griffe";
+			switch (i) {
+			case 0:
+				image = "transpiration";
+				amelioration = AmeliorationManager.ameliorationTrasnpi;
+				break;
+			case 1:
+				image = "transpiration";
+				amelioration = AmeliorationManager.ameliorationFluxSanguin;
+				break;
+			case 2:
+				image = "transpiration";
+				amelioration = AmeliorationManager.ameliorationMasseMusculaire;
+				break;
+			case 3:
+				image = "transpiration";
+				amelioration = AmeliorationManager.ameliorationHormoneFertile;
+				break;
+			case 4:
+				image = "transpiration";
+				amelioration = AmeliorationManager.ameliorationMatiereGrise;
+				break;
+			case 5:
+				image = "transpiration";
+				amelioration = AmeliorationManager.ameliorationResistance;
+				break;
+			case 6:
+				image = "transpiration";
+				amelioration = AmeliorationManager.ameliorationMigrateur;
+				break;
+			default:
+				break;
+			}
+			StackAmelioration stack = new StackAmelioration(image, amelioration);
+			stack.changeColorCase(StackAmelioration.BLEU);
+			stack.addListener(new StackAmeliorationListenner(stack));
+			tableCase.add(stack).width(96).height(96);
+			tableCase.add().width(96).height(96);
+		}
 
 		stageAmerlioration.addActor(tableCase);
-		
-		//stageUpgrade
+
+		// stageUpgrade
 		Table tableUpgrade = new Table();
 		tableUpgrade.setDebug(Parametre.MODE_DEBUG);
 		tableUpgrade.setFillParent(true);
 		tableUpgrade.bottom();
 		Image imgCadre = new Image(new Texture(Gdx.files.internal("ui/cadre.png")));
 		tableUpgrade.add(imgCadre).height(250).width(800).padBottom(hauteur_btn);
-		
-		Button button = new Button(skin);
-		button.setPosition(550, 40);
-		stageUpgrade.addActor(tableUpgrade);
-		stageUpgrade.addActor(button);
-		
+
+//		Button button = new Button(skin);
+//		button.setPosition(550, 40);
+//		stageUpgrade.addActor(tableUpgrade);
+//		stageUpgrade.addActor(button);
+
 		Image imgCadre2 = new Image(new Texture(Gdx.files.internal("ui/cadre.png")));
 		imgCadre2.setPosition(560, 50);
 		imgCadre2.setWidth(800);
-		imgCadre2.setHeight(250);
+		imgCadre2.setHeight(200);
 		stageUpgrade.addActor(imgCadre2);
-		
-		
+
 		resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 	}
 
@@ -116,7 +160,7 @@ public class EcranAmelioration extends Ecran {
 		stageBoutonBas.act(Gdx.graphics.getDeltaTime());
 		stageAmerlioration.act(Gdx.graphics.getDeltaTime());
 		stageUpgrade.act(Gdx.graphics.getDeltaTime());
-		
+
 		stageBoutonBas.draw();
 		stageUpgrade.draw();
 		stageAmerlioration.draw();

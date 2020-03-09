@@ -55,6 +55,9 @@ public class EcranGame extends Ecran {
 
 	@Override
 	public void create(final EcranManagerAbstract ecranManagerAb) {
+		//init des amelioration 
+		AmeliorationManager.initList();
+		
 		this.ecranManager = (EcranManager) ecranManagerAb;
 		
 		Parametre.PAUSE = true;
@@ -123,7 +126,7 @@ public class EcranGame extends Ecran {
 		tableCarte.top();
 		tableCarte.add().expandX().fillX().height(50);
 
-		// création du plateau (métier)
+		// crï¿½ation du plateau (mï¿½tier)
 		jeuService = new JeuService();
 		this.jeuService.zones = new Zone[7][13];
 		for (int i = 0; i < 7; i++) {
@@ -163,7 +166,7 @@ public class EcranGame extends Ecran {
 		stageBoutonBas.addActor(tableBtnBas);
 
 		// lance le jeu
-		AmeliorationManager.initList();
+		
 		jeuService.startGame(1);
 		resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 	}

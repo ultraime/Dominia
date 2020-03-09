@@ -20,7 +20,7 @@ public class Zone {
 	}
 
 	/**
-	 * Règle : nb nouveau perso = [1 à X% fertilité]/100 + 1]
+	 * Rï¿½gle : nb nouveau perso = [1 ï¿½ X% fertilitï¿½]/100 + 1]
 	 * 
 	 * @param idJoueur
 	 * @param ameliorations
@@ -96,7 +96,7 @@ public class Zone {
 	 * @param x
 	 *            -> de la zone actuel
 	 * @param y
-	 *            -> de la zone actuel Règle : Pour chaque groupe: % chance de
+	 *            -> de la zone actuel Rï¿½gle : Pour chaque groupe: % chance de
 	 *            migrer = [ X% migration]/100 + 1]
 	 */
 	public void gererMigration(final int idJoueur, Zone[][] zones, final int x, final int y) {
