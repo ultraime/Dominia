@@ -104,7 +104,7 @@ public class AmeliorationManager {
 		caracteristiqueFluxSanguin.clear();
 		caracteristiqueFluxSanguin.resistFroid = 3;
 		ameliorationFluxSanguin = new Amelioration(caracteristiqueFluxSanguin,
-				Parametre.bundle.get("txt.amelioration.flux.sanguin" + " 2"), 1);
+				Parametre.bundle.get("txt.amelioration.flux.sanguin") + " 2", 1);
 		ameliorations.add(ameliorationFluxSanguin);
 
 		// Masse Musculaire
@@ -112,14 +112,15 @@ public class AmeliorationManager {
 		caracteristiqueMasseMusculaire.clear();
 		caracteristiqueMasseMusculaire.force = 3;
 		ameliorationMasseMusculaire = new Amelioration(caracteristiqueMasseMusculaire,
-				Parametre.bundle.get("txt.amelioration.masse.musculaire" + " 2"), 1);
+				Parametre.bundle.get("txt.amelioration.masse.musculaire") + " 2", 1);
 		ameliorations.add(ameliorationMasseMusculaire);
 
 		// hormone fertile
 		final Caracteristique caracteristique = new Caracteristique();
 		caracteristique.clear();
 		caracteristique.fertilite = 3;
-		ameliorationHormoneFertile = new Amelioration(caracteristique, "txt.amelioration.hormone.fertile" + " 2", 1);
+		ameliorationHormoneFertile = new Amelioration(caracteristique,
+				Parametre.bundle.get("txt.amelioration.hormone.fertile") + " 2", 1);
 		ameliorations.add(ameliorationHormoneFertile);
 
 		// Matiere grise
@@ -127,14 +128,15 @@ public class AmeliorationManager {
 		caracteristiqueMatiereGrise.clear();
 		caracteristiqueMatiereGrise.intelligence = 3;
 		ameliorationMatiereGrise = new Amelioration(caracteristiqueMatiereGrise,
-				"txt.amelioration.hormone.fertile" + " 2", 1);
+				Parametre.bundle.get("txt.amelioration.hormone.fertile") + " 2", 1);
 		ameliorations.add(ameliorationMatiereGrise);
 
 		// Resistance
 		final Caracteristique caracteristiqueResistance = new Caracteristique();
 		caracteristiqueResistance.clear();
 		caracteristiqueResistance.vitalite = 3;
-		ameliorationResistance = new Amelioration(caracteristiqueResistance, "txt.amelioration.resistance" + " 2", 1);
+		ameliorationResistance = new Amelioration(caracteristiqueResistance,
+				Parametre.bundle.get("txt.amelioration.resistance") + " 2", 1);
 		ameliorations.add(ameliorationResistance);
 
 		// Migrateur

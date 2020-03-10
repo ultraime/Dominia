@@ -89,87 +89,10 @@ public class EcranAmelioration extends Ecran {
 		// premiere ligne
 		Amelioration amelioration = AmeliorationManager.ameliorationTrasnpi;
 		String image = "griffe";
-		for (int i = 0; i < 7; i++) {
-			switch (i) {
-			case 0:
-				image = "transpiration";
-				amelioration = AmeliorationManager.ameliorationTrasnpi;
-				break;
-			case 1:
-				image = "transpiration";
-				amelioration = AmeliorationManager.ameliorationFluxSanguin;
-				break;
-			case 2:
-				image = "transpiration";
-				amelioration = AmeliorationManager.ameliorationMasseMusculaire;
-				break;
-			case 3:
-				image = "transpiration";
-				amelioration = AmeliorationManager.ameliorationHormoneFertile;
-				break;
-			case 4:
-				image = "transpiration";
-				amelioration = AmeliorationManager.ameliorationMatiereGrise;
-				break;
-			case 5:
-				image = "transpiration";
-				amelioration = AmeliorationManager.ameliorationResistance;
-				break;
-			case 6:
-				image = "transpiration";
-				amelioration = AmeliorationManager.ameliorationMigrateur;
-				break;
-			default:
-				break;
-			}
-
-			StackAmelioration stack = new StackAmelioration(image, amelioration);
-			stack.changeColorCase(StackAmelioration.BLEU);
-			stack.addListener(new StackAmeliorationListenner(stack));
-			tableCase.add(stack).width(96).height(96);
-			tableCase.add().width(96).height(96);
-		}
+		creerPremiereLigneMenu(amelioration, image, tableCase);
 		tableCase.row();
-		// 2éme ligne
-		for (int i = 0; i < 7; i++) {
-			switch (i) {
-			case 0:
-				image = "transpiration";
-				amelioration = AmeliorationManager.ameliorationTrasnpi;
-				break;
-			case 1:
-				image = "transpiration";
-				amelioration = AmeliorationManager.ameliorationFluxSanguin;
-				break;
-			case 2:
-				image = "transpiration";
-				amelioration = AmeliorationManager.ameliorationMasseMusculaire;
-				break;
-			case 3:
-				image = "transpiration";
-				amelioration = AmeliorationManager.ameliorationHormoneFertile;
-				break;
-			case 4:
-				image = "transpiration";
-				amelioration = AmeliorationManager.ameliorationMatiereGrise;
-				break;
-			case 5:
-				image = "transpiration";
-				amelioration = AmeliorationManager.ameliorationResistance;
-				break;
-			case 6:
-				image = "transpiration";
-				amelioration = AmeliorationManager.ameliorationMigrateur;
-				break;
-			default:
-				break;
-			}
-			StackAmelioration stack = new StackAmelioration(image, amelioration);
-			stack.changeColorCase(StackAmelioration.BLEU);
-			stack.addListener(new StackAmeliorationListenner(stack));
-			tableCase.add(stack).width(96).height(96);
-			tableCase.add().width(96).height(96);
-		}
+		// 2ï¿½me ligne
+		creerDeuxiemeLigneMenu(amelioration, image, tableCase);
 		stageAmerlioration.addActor(tableCase);
 
 		// stageUpgrade
@@ -192,6 +115,89 @@ public class EcranAmelioration extends Ecran {
 		stageUpgrade.addActor(imgCadre2);
 
 		resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+	}
+	private void creerDeuxiemeLigneMenu(Amelioration amelioration, String image, final Table tableCase) {
+		for (int i = 0; i < 7; i++) {
+			switch (i) {
+			case 0:
+				image = "transpiration";
+				amelioration = AmeliorationManager.ameliorationTrasnpi;
+				break;
+			case 1:
+				image = "transpiration";
+				amelioration = AmeliorationManager.ameliorationFluxSanguin;
+				break;
+			case 2:
+				image = "transpiration";
+				amelioration = AmeliorationManager.ameliorationMasseMusculaire;
+				break;
+			case 3:
+				image = "transpiration";
+				amelioration = AmeliorationManager.ameliorationHormoneFertile;
+				break;
+			case 4:
+				image = "transpiration";
+				amelioration = AmeliorationManager.ameliorationMatiereGrise;
+				break;
+			case 5:
+				image = "transpiration";
+				amelioration = AmeliorationManager.ameliorationResistance;
+				break;
+			case 6:
+				image = "transpiration";
+				amelioration = AmeliorationManager.ameliorationMigrateur;
+				break;
+			default:
+				break;
+			}
+			StackAmelioration stack = new StackAmelioration(image, amelioration);
+			stack.changeColorCase(StackAmelioration.BLEU);
+			stack.addListener(new StackAmeliorationListenner(stack));
+			tableCase.add(stack).width(96).height(96);
+			tableCase.add().width(96).height(96);
+		}
+	}
+	private void creerPremiereLigneMenu(Amelioration amelioration, String image, final Table tableCase) {
+		for (int i = 0; i < 7; i++) {
+			switch (i) {
+			case 0:
+				image = "transpiration";
+				amelioration = AmeliorationManager.ameliorationTrasnpi;
+				break;
+			case 1:
+				image = "transpiration";
+				amelioration = AmeliorationManager.ameliorationFluxSanguin;
+				break;
+			case 2:
+				image = "transpiration";
+				amelioration = AmeliorationManager.ameliorationMasseMusculaire;
+				break;
+			case 3:
+				image = "transpiration";
+				amelioration = AmeliorationManager.ameliorationHormoneFertile;
+				break;
+			case 4:
+				image = "transpiration";
+				amelioration = AmeliorationManager.ameliorationMatiereGrise;
+				break;
+			case 5:
+				image = "transpiration";
+				amelioration = AmeliorationManager.ameliorationResistance;
+				break;
+			case 6:
+				image = "transpiration";
+				amelioration = AmeliorationManager.ameliorationMigrateur;
+				break;
+			default:
+				break;
+			}
+
+			StackAmelioration stack = new StackAmelioration(image, amelioration);
+			stack.changeColorCase(StackAmelioration.BLEU);
+			stack.addListener(new StackAmeliorationListenner(stack));
+			tableCase.add(stack).width(96).height(96);
+			tableCase.add().width(96).height(96);
+		}
 	}
 
 	@Override
