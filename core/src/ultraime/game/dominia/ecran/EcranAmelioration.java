@@ -1,7 +1,5 @@
 package ultraime.game.dominia.ecran;
 
-import java.util.ArrayList;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.GL20;
@@ -9,7 +7,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -18,11 +15,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.ultraime.game.gdxtraime.ecran.Ecran;
 import com.ultraime.game.gdxtraime.ecran.EcranManagerAbstract;
 import com.ultraime.game.gdxtraime.parametrage.Parametre;
-
-import ultraime.game.dominia.composant.StackAmelioration;
-import ultraime.game.dominia.composant.StackAmeliorationListenner;
-import ultraime.game.dominia.entite.Amelioration;
-import ultraime.game.dominia.service.AmeliorationManager;
 
 /**
  * @author ultraime Ecran de base pour d�marrer une partie
@@ -33,6 +25,8 @@ public class EcranAmelioration extends Ecran {
 	private Stage stageAmerlioration;
 	private Stage stageUpgrade;
 	private Skin skin;
+
+	private MenuAmelioration menuAmelioration;
 	// private ArrayList<StackAmelioration> stackAmeliorations = new
 	// ArrayList<StackAmelioration>();
 
@@ -78,21 +72,8 @@ public class EcranAmelioration extends Ecran {
 		stageBoutonBas.addActor(tableBtnBas);
 
 		// stageAmerlioration
-		Table tableCase = new Table();
-		tableCase.setDebug(Parametre.MODE_DEBUG);
-		tableCase.setFillParent(true);
-		tableCase.top();
-		for (int i = 0; i < 14; i++) {
-			tableCase.add().width(96).height(30);
-		}
-		tableCase.row();
-		// premiere ligne
-		Amelioration amelioration = AmeliorationManager.ameliorationTrasnpi;
-		String image = "griffe";
-		creerPremiereLigneMenu(amelioration, image, tableCase);
-		tableCase.row();
-		// 2�me ligne
-		creerDeuxiemeLigneMenu(amelioration, image, tableCase);
+		menuAmelioration = new MenuAmelioration();
+		final Table tableCase = menuAmelioration.creerMenuAmelioration();
 		stageAmerlioration.addActor(tableCase);
 
 		// stageUpgrade
@@ -115,89 +96,6 @@ public class EcranAmelioration extends Ecran {
 		stageUpgrade.addActor(imgCadre2);
 
 		resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-	}
-	private void creerDeuxiemeLigneMenu(Amelioration amelioration, String image, final Table tableCase) {
-		for (int i = 0; i < 7; i++) {
-			switch (i) {
-			case 0:
-				image = "transpiration";
-				amelioration = AmeliorationManager.ameliorationTrasnpi;
-				break;
-			case 1:
-				image = "transpiration";
-				amelioration = AmeliorationManager.ameliorationFluxSanguin;
-				break;
-			case 2:
-				image = "transpiration";
-				amelioration = AmeliorationManager.ameliorationMasseMusculaire;
-				break;
-			case 3:
-				image = "transpiration";
-				amelioration = AmeliorationManager.ameliorationHormoneFertile;
-				break;
-			case 4:
-				image = "transpiration";
-				amelioration = AmeliorationManager.ameliorationMatiereGrise;
-				break;
-			case 5:
-				image = "transpiration";
-				amelioration = AmeliorationManager.ameliorationResistance;
-				break;
-			case 6:
-				image = "transpiration";
-				amelioration = AmeliorationManager.ameliorationMigrateur;
-				break;
-			default:
-				break;
-			}
-			StackAmelioration stack = new StackAmelioration(image, amelioration);
-			stack.changeColorCase(StackAmelioration.BLEU);
-			stack.addListener(new StackAmeliorationListenner(stack));
-			tableCase.add(stack).width(96).height(96);
-			tableCase.add().width(96).height(96);
-		}
-	}
-	private void creerPremiereLigneMenu(Amelioration amelioration, String image, final Table tableCase) {
-		for (int i = 0; i < 7; i++) {
-			switch (i) {
-			case 0:
-				image = "transpiration";
-				amelioration = AmeliorationManager.ameliorationTrasnpi;
-				break;
-			case 1:
-				image = "transpiration";
-				amelioration = AmeliorationManager.ameliorationFluxSanguin;
-				break;
-			case 2:
-				image = "transpiration";
-				amelioration = AmeliorationManager.ameliorationMasseMusculaire;
-				break;
-			case 3:
-				image = "transpiration";
-				amelioration = AmeliorationManager.ameliorationHormoneFertile;
-				break;
-			case 4:
-				image = "transpiration";
-				amelioration = AmeliorationManager.ameliorationMatiereGrise;
-				break;
-			case 5:
-				image = "transpiration";
-				amelioration = AmeliorationManager.ameliorationResistance;
-				break;
-			case 6:
-				image = "transpiration";
-				amelioration = AmeliorationManager.ameliorationMigrateur;
-				break;
-			default:
-				break;
-			}
-
-			StackAmelioration stack = new StackAmelioration(image, amelioration);
-			stack.changeColorCase(StackAmelioration.BLEU);
-			stack.addListener(new StackAmeliorationListenner(stack));
-			tableCase.add(stack).width(96).height(96);
-			tableCase.add().width(96).height(96);
-		}
 	}
 
 	@Override
