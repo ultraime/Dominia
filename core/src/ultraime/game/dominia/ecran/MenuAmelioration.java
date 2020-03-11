@@ -13,6 +13,11 @@ public class MenuAmelioration {
 	public static final int WIDTH_CASE = 80;
 	public static final int HEIGHT_CASE = 80;
 	public static final int HEIGHT_DECALAGE = 30;
+	private MenuUpgrade menuUpgrade;
+
+	public MenuAmelioration(final MenuUpgrade menuUpgrade) {
+		this.menuUpgrade = menuUpgrade;
+	}
 
 	public Table creerMenuAmelioration() {
 		Table tableCase = new Table();
@@ -32,7 +37,9 @@ public class MenuAmelioration {
 		String image = "griffe";
 		creerPremiereLigneMenu(amelioration, image, tableCase);
 		tableCase.row();
-		// 2�me ligne
+		tableCase.add().height(HEIGHT_DECALAGE).expandX().fillX();
+		tableCase.row();
+		// 2éme ligne
 		 creerDeuxiemeLigneMenu(amelioration, image, tableCase);
 		return tableCase;
 	}
@@ -83,7 +90,7 @@ public class MenuAmelioration {
 		if (isVide) {
 			tableCase.add().width(WIDTH_CASE).height(HEIGHT_CASE);
 		} else {
-			StackAmelioration stack = new StackAmelioration(image, amelioration);
+			StackAmelioration stack = new StackAmelioration(menuUpgrade,image, amelioration);
 			stack.changeColorCase(StackAmelioration.BLEU);
 			stack.addListener(new StackAmeliorationListenner(stack));
 			tableCase.add(stack).width(WIDTH_CASE).height(HEIGHT_CASE);

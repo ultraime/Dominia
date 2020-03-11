@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Stack;
 
+import ultraime.game.dominia.ecran.MenuUpgrade;
 import ultraime.game.dominia.entite.Amelioration;
 
 public class StackAmelioration extends Stack {
@@ -15,19 +16,33 @@ public class StackAmelioration extends Stack {
 	public final static Texture txtCase_rouge = new Texture(Gdx.files.internal("amelioration/case_rouge.png"));
 	public final static Texture txtCase_verte = new Texture(Gdx.files.internal("amelioration/case_verte.png"));
 
+	public MenuUpgrade menuUpgrade;
 	/**
 	 * Image de l'amélioration
 	 */
 	public Image[] img = new Image[3];
 
+	public String nomImage;
+
 	/**
 	 * Image du cadre
 	 */
 	public Image[] imgCadre = new Image[3];
-	
-	private Amelioration amelioration;
 
-	public StackAmelioration(final String image, final Amelioration amelioration) {
+	public Amelioration amelioration;
+
+	public StackAmelioration(MenuUpgrade menuUpgrade, final String image, final Amelioration amelioration) {
+		init(menuUpgrade, image, amelioration);
+		nomImage = image;
+
+	}
+
+	/**
+	 * @param menuUpgrade
+	 * @param image
+	 * @param amelioration
+	 */
+	public void init(MenuUpgrade menuUpgrade, final String image, final Amelioration amelioration) {
 		final Texture t1 = new Texture(Gdx.files.internal("amelioration/" + image + "_bleu.png"));
 		final Texture t2 = new Texture(Gdx.files.internal("amelioration/" + image + "_rouge.png"));
 		final Texture t3 = new Texture(Gdx.files.internal("amelioration/" + image + "_vert.png"));
@@ -40,6 +55,8 @@ public class StackAmelioration extends Stack {
 		imgCadre[2] = new Image(txtCase_verte);
 
 		this.amelioration = amelioration;
+
+		this.menuUpgrade = menuUpgrade;
 	}
 
 	public void changeColorCase(final int color) {
@@ -47,4 +64,5 @@ public class StackAmelioration extends Stack {
 		add(imgCadre[color]);
 		add(img[color]);
 	}
+
 }

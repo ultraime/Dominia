@@ -27,14 +27,14 @@ public class EcranAmelioration extends Ecran {
 	private Skin skin;
 
 	private MenuAmelioration menuAmelioration;
-	// private ArrayList<StackAmelioration> stackAmeliorations = new
-	// ArrayList<StackAmelioration>();
+	private MenuUpgrade menuUpgrade;
 
 	@Override
 	public void changerEcran(InputMultiplexer inputMultiplexer) {
 		inputMultiplexer.addProcessor(this);
 		inputMultiplexer.addProcessor(stageBoutonBas);
 		inputMultiplexer.addProcessor(stageUpgrade);
+		inputMultiplexer.addProcessor(stageAmerlioration);
 
 	}
 
@@ -71,29 +71,15 @@ public class EcranAmelioration extends Ecran {
 		tableBtnBas.add().expandX().fillX();
 		stageBoutonBas.addActor(tableBtnBas);
 
+
+		menuUpgrade = new MenuUpgrade();
+		menuUpgrade.createSDtage(stageUpgrade);
+		menuUpgrade.showMenu(false);
+		
 		// stageAmerlioration
-		menuAmelioration = new MenuAmelioration();
+		menuAmelioration = new MenuAmelioration(menuUpgrade);
 		final Table tableCase = menuAmelioration.creerMenuAmelioration();
 		stageAmerlioration.addActor(tableCase);
-
-		// stageUpgrade
-		Table tableUpgrade = new Table();
-		tableUpgrade.setDebug(Parametre.MODE_DEBUG);
-		tableUpgrade.setFillParent(true);
-		tableUpgrade.bottom();
-		Image imgCadre = new Image(new Texture(Gdx.files.internal("ui/cadre.png")));
-		tableUpgrade.add(imgCadre).height(250).width(800).padBottom(hauteur_btn);
-
-		// Button button = new Button(skin);
-		// button.setPosition(550, 40);
-		// stageUpgrade.addActor(tableUpgrade);
-		// stageUpgrade.addActor(button);
-
-		Image imgCadre2 = new Image(new Texture(Gdx.files.internal("ui/cadre.png")));
-		imgCadre2.setPosition(560, 50);
-		imgCadre2.setWidth(800);
-		imgCadre2.setHeight(200);
-		stageUpgrade.addActor(imgCadre2);
 
 		resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 	}

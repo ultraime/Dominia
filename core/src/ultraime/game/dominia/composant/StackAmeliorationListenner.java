@@ -12,7 +12,10 @@ public class StackAmeliorationListenner extends ClickListener {
 
 	@Override
 	public void clicked(InputEvent event, float x, float y) {
-		super.clicked(event, x, y);
+//		super.clicked(event, x, y);
+
+		this.stackAmelioration.menuUpgrade.modifierStack(stackAmelioration);
+		this.stackAmelioration.menuUpgrade.showMenu(true);
 	}
 
 }
