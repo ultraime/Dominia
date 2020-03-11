@@ -24,6 +24,8 @@ public class StackAmelioration extends Stack {
 
 	public String nomImage;
 
+	public int color = BLEU;
+
 	/**
 	 * Image du cadre
 	 */
@@ -63,6 +65,7 @@ public class StackAmelioration extends Stack {
 		clear();
 		add(imgCadre[color]);
 		add(img[color]);
+		this.color = color;
 	}
 
 }

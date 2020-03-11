@@ -40,7 +40,17 @@ public class MenuUpgrade {
 
 	public void modifierStack(StackAmelioration stackAmelioration) {
 		this.stackAmelioration.init(this, stackAmelioration.nomImage, stackAmelioration.amelioration);
-		this.stackAmelioration.changeColorCase(StackAmelioration.BLEU);
+		this.stackAmelioration.changeColorCase(stackAmelioration.color);
+		
+		
+		final Caracteristique caracteristique = stackAmelioration.amelioration.caracteristique;
+		lForceStat.setText(Integer.toString(caracteristique.force));
+		lFertiliteStat.setText(Integer.toString(caracteristique.fertilite));
+		lMigrationStat.setText(Integer.toString(caracteristique.migration));
+		lIntelligenceStat.setText(Integer.toString(caracteristique.intelligence));
+		lResistChaleurStat.setText(Integer.toString(caracteristique.resistChaleur));
+		lResistFroidStat.setText(Integer.toString(caracteristique.resistFroid));
+		lVitaliteStat.setText(Integer.toString(caracteristique.vitalite));
 	}
 
 	public void createSDtage(Stage stageUpgrade) {
@@ -80,8 +90,8 @@ public class MenuUpgrade {
 		lMigration.setPosition(700, 190 - (ECART_LABEL * 2));
 		lIntelligence.setPosition(700, 190 - (ECART_LABEL * 3));
 		lResistChaleur.setPosition(700, 190 - (ECART_LABEL * 4));
-		lVitalite.setPosition(700, 190 - (ECART_LABEL * 5));
-		lResistFroid.setPosition(700, 190 - (ECART_LABEL * 6));
+		lResistFroid.setPosition(700, 190 - (ECART_LABEL * 5));
+		lVitalite.setPosition(700, 190 - (ECART_LABEL * 6));
 
 		stageUpgrade.addActor(lForce);
 		stageUpgrade.addActor(lFertilite);
@@ -91,18 +101,30 @@ public class MenuUpgrade {
 		stageUpgrade.addActor(lVitalite);
 		stageUpgrade.addActor(lResistFroid);
 		
-//		final Caracteristique caracteristique = stackAmelioration.amelioration.caracteristique;
-		lForceStat = new Label(": ", skin);
-		lFertiliteStat = new Label("", skin);
-		lMigrationStat = new Label("", skin);
-		lIntelligenceStat = new Label("", skin);
-		lResistChaleurStat = new Label("", skin);
-		lResistFroidStat = new Label("", skin);
-		lVitaliteStat = new Label("", skin);
-//		
-//		lForce.setPosition(800, 190);
-//		
-//		stageUpgrade.addActor(lForceStat);
+		final Caracteristique caracteristique = stackAmelioration.amelioration.caracteristique;
+		lForceStat = new Label(Integer.toString(caracteristique.force), skin);
+		lFertiliteStat = new Label(Integer.toString(caracteristique.fertilite), skin);
+		lMigrationStat = new Label(Integer.toString(caracteristique.migration), skin);
+		lIntelligenceStat = new Label(Integer.toString(caracteristique.intelligence), skin);
+		lResistChaleurStat = new Label(Integer.toString(caracteristique.resistChaleur), skin);
+		lResistFroidStat = new Label(Integer.toString(caracteristique.resistFroid), skin);
+		lVitaliteStat = new Label(Integer.toString(caracteristique.vitalite), skin);
+
+		lForceStat.setPosition(810, 196);
+		lFertiliteStat.setPosition(810, 196 - (ECART_LABEL)); 
+		lMigrationStat.setPosition(810, 196 - (ECART_LABEL*2)); 
+		lIntelligenceStat.setPosition(810, 196 - (ECART_LABEL*3)); 
+		lResistChaleurStat.setPosition(810, 196 - (ECART_LABEL*4)); 
+		lResistFroidStat.setPosition(810, 196 - (ECART_LABEL*5));
+		lVitaliteStat.setPosition(810, 196 - (ECART_LABEL*6)); 
+		
+		stageUpgrade.addActor(lForceStat);
+		stageUpgrade.addActor(lFertiliteStat);
+		stageUpgrade.addActor(lMigrationStat);
+		stageUpgrade.addActor(lIntelligenceStat);
+		stageUpgrade.addActor(lResistChaleurStat);
+		stageUpgrade.addActor(lResistFroidStat);
+		stageUpgrade.addActor(lVitaliteStat);
 	}
 
 	public void showMenu(boolean isShow) {

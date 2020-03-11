@@ -40,7 +40,7 @@ public class MenuAmelioration {
 		tableCase.add().height(HEIGHT_DECALAGE).expandX().fillX();
 		tableCase.row();
 		// 2éme ligne
-		 creerDeuxiemeLigneMenu(amelioration, image, tableCase);
+		creerDeuxiemeLigneMenu(amelioration, image, tableCase);
 		return tableCase;
 	}
 
@@ -90,8 +90,12 @@ public class MenuAmelioration {
 		if (isVide) {
 			tableCase.add().width(WIDTH_CASE).height(HEIGHT_CASE);
 		} else {
-			StackAmelioration stack = new StackAmelioration(menuUpgrade,image, amelioration);
-			stack.changeColorCase(StackAmelioration.BLEU);
+			StackAmelioration stack = new StackAmelioration(menuUpgrade, image, amelioration);
+			if (stack.amelioration.ameliorationsRequise.size() > 0) {
+				stack.changeColorCase(StackAmelioration.ROUGE);
+			} else {
+				stack.changeColorCase(StackAmelioration.BLEU);
+			}
 			stack.addListener(new StackAmeliorationListenner(stack));
 			tableCase.add(stack).width(WIDTH_CASE).height(HEIGHT_CASE);
 		}
@@ -104,31 +108,31 @@ public class MenuAmelioration {
 			switch (i) {
 			case 0:
 				image = "transpiration";
-				amelioration = AmeliorationManager.ameliorationTrasnpi;
+				amelioration = AmeliorationManager.ameliorationTrasnpi2;
 				break;
 			case 2:
 				image = "transpiration";
-				amelioration = AmeliorationManager.ameliorationFluxSanguin;
+				amelioration = AmeliorationManager.ameliorationFluxSanguin2;
 				break;
 			case 4:
 				image = "transpiration";
-				amelioration = AmeliorationManager.ameliorationMasseMusculaire;
+				amelioration = AmeliorationManager.ameliorationMasseMusculaire2;
 				break;
 			case 10:
 				image = "transpiration";
-				amelioration = AmeliorationManager.ameliorationHormoneFertile;
+				amelioration = AmeliorationManager.ameliorationHormoneFertile2;
 				break;
 			case 12:
 				image = "transpiration";
-				amelioration = AmeliorationManager.ameliorationMatiereGrise;
+				amelioration = AmeliorationManager.ameliorationMatiereGrise2;
 				break;
 			case 16:
 				image = "transpiration";
-				amelioration = AmeliorationManager.ameliorationResistance;
+				amelioration = AmeliorationManager.ameliorationResistance2;
 				break;
 			case 20:
 				image = "transpiration";
-				amelioration = AmeliorationManager.ameliorationMigrateur;
+				amelioration = AmeliorationManager.ameliorationMigrateur2;
 				break;
 			default:
 				isVide = true;

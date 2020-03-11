@@ -64,28 +64,32 @@ public class AmeliorationManager {
 		final Caracteristique caracteristique = new Caracteristique();
 		caracteristique.clear();
 		caracteristique.fertilite = 3;
-		ameliorationHormoneFertile = new Amelioration(caracteristique, "txt.amelioration.hormone.fertile", 1);
+		ameliorationHormoneFertile = new Amelioration(caracteristique,
+				Parametre.bundle.get("txt.amelioration.hormone.fertile"), 1);
 		ameliorations.add(ameliorationHormoneFertile);
 
 		// Matiere grise
 		final Caracteristique caracteristiqueMatiereGrise = new Caracteristique();
 		caracteristiqueMatiereGrise.clear();
 		caracteristiqueMatiereGrise.intelligence = 3;
-		ameliorationMatiereGrise = new Amelioration(caracteristiqueMatiereGrise, "txt.amelioration.hormone.fertile", 1);
+		ameliorationMatiereGrise = new Amelioration(caracteristiqueMatiereGrise,
+				Parametre.bundle.get("txt.amelioration.hormone.fertile"), 1);
 		ameliorations.add(ameliorationMatiereGrise);
 
 		// Resistance
 		final Caracteristique caracteristiqueResistance = new Caracteristique();
 		caracteristiqueResistance.clear();
 		caracteristiqueResistance.vitalite = 3;
-		ameliorationResistance = new Amelioration(caracteristiqueResistance, "txt.amelioration.resistance", 1);
+		ameliorationResistance = new Amelioration(caracteristiqueResistance,
+				Parametre.bundle.get("txt.amelioration.resistance"), 1);
 		ameliorations.add(ameliorationResistance);
 
 		// Migrateur
 		final Caracteristique caracteristiqueMigrateur = new Caracteristique();
 		caracteristiqueMigrateur.clear();
 		caracteristiqueMigrateur.migration = 3;
-		ameliorationMigrateur = new Amelioration(caracteristiqueMigrateur, "txt.amelioration.migrateur", 1);
+		ameliorationMigrateur = new Amelioration(caracteristiqueMigrateur,
+				Parametre.bundle.get("txt.amelioration.migrateur"), 1);
 		ameliorations.add(ameliorationMigrateur);
 
 	}
@@ -95,56 +99,63 @@ public class AmeliorationManager {
 		final Caracteristique caracteristiqueTrasnpi = new Caracteristique();
 		caracteristiqueTrasnpi.clear();
 		caracteristiqueTrasnpi.resistChaleur = 3;
-		ameliorationTrasnpi = new Amelioration(caracteristiqueTrasnpi,
+		ameliorationTrasnpi2 = new Amelioration(caracteristiqueTrasnpi,
 				Parametre.bundle.get("txt.amelioration.transpiration") + " 2", 1);
-		ameliorations.add(ameliorationTrasnpi);
+		ameliorationTrasnpi2.ameliorationsRequise.add(ameliorationTrasnpi);
+		ameliorations.add(ameliorationTrasnpi2);
 
 		// flux sanguin
 		final Caracteristique caracteristiqueFluxSanguin = new Caracteristique();
 		caracteristiqueFluxSanguin.clear();
 		caracteristiqueFluxSanguin.resistFroid = 3;
-		ameliorationFluxSanguin = new Amelioration(caracteristiqueFluxSanguin,
+		ameliorationFluxSanguin2 = new Amelioration(caracteristiqueFluxSanguin,
 				Parametre.bundle.get("txt.amelioration.flux.sanguin") + " 2", 1);
-		ameliorations.add(ameliorationFluxSanguin);
+		ameliorationFluxSanguin2.ameliorationsRequise.add(ameliorationFluxSanguin);
+		ameliorations.add(ameliorationFluxSanguin2);
 
 		// Masse Musculaire
 		final Caracteristique caracteristiqueMasseMusculaire = new Caracteristique();
 		caracteristiqueMasseMusculaire.clear();
 		caracteristiqueMasseMusculaire.force = 3;
-		ameliorationMasseMusculaire = new Amelioration(caracteristiqueMasseMusculaire,
+		ameliorationMasseMusculaire2 = new Amelioration(caracteristiqueMasseMusculaire,
 				Parametre.bundle.get("txt.amelioration.masse.musculaire") + " 2", 1);
-		ameliorations.add(ameliorationMasseMusculaire);
+		ameliorationMasseMusculaire2.ameliorationsRequise.add(ameliorationMasseMusculaire);
+		ameliorations.add(ameliorationMasseMusculaire2);
 
 		// hormone fertile
 		final Caracteristique caracteristique = new Caracteristique();
 		caracteristique.clear();
 		caracteristique.fertilite = 3;
-		ameliorationHormoneFertile = new Amelioration(caracteristique,
+		ameliorationHormoneFertile2 = new Amelioration(caracteristique,
 				Parametre.bundle.get("txt.amelioration.hormone.fertile") + " 2", 1);
-		ameliorations.add(ameliorationHormoneFertile);
+		ameliorationHormoneFertile2.ameliorationsRequise.add(ameliorationHormoneFertile);
+		ameliorations.add(ameliorationHormoneFertile2);
 
 		// Matiere grise
 		final Caracteristique caracteristiqueMatiereGrise = new Caracteristique();
 		caracteristiqueMatiereGrise.clear();
 		caracteristiqueMatiereGrise.intelligence = 3;
-		ameliorationMatiereGrise = new Amelioration(caracteristiqueMatiereGrise,
+		ameliorationMatiereGrise2 = new Amelioration(caracteristiqueMatiereGrise,
 				Parametre.bundle.get("txt.amelioration.hormone.fertile") + " 2", 1);
-		ameliorations.add(ameliorationMatiereGrise);
+		ameliorationMatiereGrise2.ameliorationsRequise.add(ameliorationMatiereGrise);
+		ameliorations.add(ameliorationMatiereGrise2);
 
 		// Resistance
 		final Caracteristique caracteristiqueResistance = new Caracteristique();
 		caracteristiqueResistance.clear();
 		caracteristiqueResistance.vitalite = 3;
-		ameliorationResistance = new Amelioration(caracteristiqueResistance,
+		ameliorationResistance2 = new Amelioration(caracteristiqueResistance,
 				Parametre.bundle.get("txt.amelioration.resistance") + " 2", 1);
-		ameliorations.add(ameliorationResistance);
+		ameliorationResistance2.ameliorationsRequise.add(ameliorationResistance);
+		ameliorations.add(ameliorationResistance2);
 
 		// Migrateur
 		final Caracteristique caracteristiqueMigrateur = new Caracteristique();
 		caracteristiqueMigrateur.clear();
 		caracteristiqueMigrateur.migration = 3;
-		ameliorationMigrateur = new Amelioration(caracteristiqueMigrateur, "txt.amelioration.migrateur" + " 2", 1);
-		ameliorations.add(ameliorationMigrateur);
+		ameliorationMigrateur2 = new Amelioration(caracteristiqueMigrateur, "txt.amelioration.migrateur" + " 2", 1);
+		ameliorationMigrateur2.ameliorationsRequise.add(ameliorationMigrateur);
+		ameliorations.add(ameliorationMigrateur2);
 
 	}
 

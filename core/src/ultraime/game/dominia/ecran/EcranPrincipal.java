@@ -59,8 +59,8 @@ public class EcranPrincipal extends Ecran {
 		buttonLancerPartieEcran.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				ecran.ecranAmelioration.create(ecran);
 				ecran.ecranGame.create(ecran);
+				ecran.ecranAmelioration.create(ecran);
 				ecran.initialiserEcran(ecran.ecranGame);
 			}
 		});
