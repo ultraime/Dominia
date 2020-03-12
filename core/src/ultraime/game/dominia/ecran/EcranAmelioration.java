@@ -70,7 +70,7 @@ public class EcranAmelioration extends Ecran {
 		stageBoutonBas.addActor(tableBtnBas);
 
 
-		menuUpgrade = new MenuUpgrade();
+		menuUpgrade = new MenuUpgrade(ecranManager.ecranGame.jeuService.joueurs.get(0));
 		menuUpgrade.createSDtage(stageUpgrade);
 		menuUpgrade.showMenu(false);
 		

@@ -42,7 +42,7 @@ public class EcranGame extends Ecran {
 	final private Texture txt_j1 = new Texture(Gdx.files.internal("logo/joueur_0.png"));
 
 	// Jeu
-	private JeuService jeuService;
+	public JeuService jeuService;
 	private ArrayList<Label> labelZone = new ArrayList<Label>();
 
 	@Override

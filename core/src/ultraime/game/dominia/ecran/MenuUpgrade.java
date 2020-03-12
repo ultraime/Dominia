@@ -6,10 +6,13 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.ultraime.game.gdxtraime.parametrage.Parametre;
 
+import ultraime.game.dominia.composant.BtnAchatListenner;
 import ultraime.game.dominia.composant.StackAmelioration;
 import ultraime.game.dominia.entite.Caracteristique;
+import ultraime.game.dominia.entite.Joueur;
 import ultraime.game.dominia.service.AmeliorationManager;
 
 public class MenuUpgrade {
@@ -21,6 +24,8 @@ public class MenuUpgrade {
 
 	private Image imgCadre;
 	public StackAmelioration stackAmelioration;
+
+	public Joueur joueur;
 
 	private Label lForce;
 	private Label lFertilite;
@@ -37,12 +42,17 @@ public class MenuUpgrade {
 	private Label lResistChaleurStat;
 	private Label lResistFroidStat;
 	private Label lVitaliteStat;
+	
+	private TextButton buttonValider;
+
+	public MenuUpgrade(final Joueur joueur) {
+		this.joueur = joueur;
+	}
 
 	public void modifierStack(StackAmelioration stackAmelioration) {
 		this.stackAmelioration.init(this, stackAmelioration.nomImage, stackAmelioration.amelioration);
 		this.stackAmelioration.changeColorCase(stackAmelioration.color);
-		
-		
+
 		final Caracteristique caracteristique = stackAmelioration.amelioration.caracteristique;
 		lForceStat.setText(Integer.toString(caracteristique.force));
 		lFertiliteStat.setText(Integer.toString(caracteristique.fertilite));
@@ -100,7 +110,7 @@ public class MenuUpgrade {
 		stageUpgrade.addActor(lResistChaleur);
 		stageUpgrade.addActor(lVitalite);
 		stageUpgrade.addActor(lResistFroid);
-		
+
 		final Caracteristique caracteristique = stackAmelioration.amelioration.caracteristique;
 		lForceStat = new Label(Integer.toString(caracteristique.force), skin);
 		lFertiliteStat = new Label(Integer.toString(caracteristique.fertilite), skin);
@@ -111,13 +121,13 @@ public class MenuUpgrade {
 		lVitaliteStat = new Label(Integer.toString(caracteristique.vitalite), skin);
 
 		lForceStat.setPosition(810, 196);
-		lFertiliteStat.setPosition(810, 196 - (ECART_LABEL)); 
-		lMigrationStat.setPosition(810, 196 - (ECART_LABEL*2)); 
-		lIntelligenceStat.setPosition(810, 196 - (ECART_LABEL*3)); 
-		lResistChaleurStat.setPosition(810, 196 - (ECART_LABEL*4)); 
-		lResistFroidStat.setPosition(810, 196 - (ECART_LABEL*5));
-		lVitaliteStat.setPosition(810, 196 - (ECART_LABEL*6)); 
-		
+		lFertiliteStat.setPosition(810, 196 - (ECART_LABEL));
+		lMigrationStat.setPosition(810, 196 - (ECART_LABEL * 2));
+		lIntelligenceStat.setPosition(810, 196 - (ECART_LABEL * 3));
+		lResistChaleurStat.setPosition(810, 196 - (ECART_LABEL * 4));
+		lResistFroidStat.setPosition(810, 196 - (ECART_LABEL * 5));
+		lVitaliteStat.setPosition(810, 196 - (ECART_LABEL * 6));
+
 		stageUpgrade.addActor(lForceStat);
 		stageUpgrade.addActor(lFertiliteStat);
 		stageUpgrade.addActor(lMigrationStat);
@@ -125,12 +135,20 @@ public class MenuUpgrade {
 		stageUpgrade.addActor(lResistChaleurStat);
 		stageUpgrade.addActor(lResistFroidStat);
 		stageUpgrade.addActor(lVitaliteStat);
+		
+		buttonValider = new TextButton(Parametre.bundle.get("txt.menu.achat"), skin);
+		buttonValider.setSize(200, 50);
+		buttonValider.setPosition(1160, 45);
+		
+		final BtnAchatListenner btnAchatListenner = new BtnAchatListenner(this);
+		buttonValider.addListener(btnAchatListenner);
+		stageUpgrade.addActor(buttonValider);
 	}
 
 	public void showMenu(boolean isShow) {
 		imgCadre.setVisible(isShow);
 		stackAmelioration.setVisible(isShow);
-		
+
 		lForce.setVisible(isShow);
 		lFertilite.setVisible(isShow);
 		lMigration.setVisible(isShow);
@@ -138,7 +156,7 @@ public class MenuUpgrade {
 		lResistChaleur.setVisible(isShow);
 		lVitalite.setVisible(isShow);
 		lResistFroid.setVisible(isShow);
-		
+
 		lForceStat.setVisible(isShow);
 		lFertiliteStat.setVisible(isShow);
 		lMigrationStat.setVisible(isShow);
@@ -146,6 +164,8 @@ public class MenuUpgrade {
 		lResistChaleurStat.setVisible(isShow);
 		lVitaliteStat.setVisible(isShow);
 		lResistFroidStat.setVisible(isShow);
+		
+		buttonValider.setVisible(isShow);
 	}
 
 }

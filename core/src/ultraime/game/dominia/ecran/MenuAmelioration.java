@@ -35,13 +35,34 @@ public class MenuAmelioration {
 		// premiere ligne
 		Amelioration amelioration = AmeliorationManager.ameliorationTrasnpi;
 		String image = "griffe";
+
 		creerPremiereLigneMenu(amelioration, image, tableCase);
 		tableCase.row();
 		tableCase.add().height(HEIGHT_DECALAGE).expandX().fillX();
 		tableCase.row();
-		// 2éme ligne
 		creerDeuxiemeLigneMenu(amelioration, image, tableCase);
+		tableCase.row();
+		tableCase.add().height(HEIGHT_DECALAGE).expandX().fillX();
+		tableCase.row();
+		creerTroisiemeLigneMenu(amelioration, image, tableCase);
+	
+
 		return tableCase;
+	}
+
+	private void addElement(Amelioration amelioration, String image, final Table tableCase, boolean isVide) {
+		if (isVide) {
+			tableCase.add().width(WIDTH_CASE).height(HEIGHT_CASE);
+		} else {
+			StackAmelioration stack = new StackAmelioration(menuUpgrade, image, amelioration);
+			if (stack.amelioration.ameliorationsRequise.size() > 0) {
+				stack.changeColorCase(StackAmelioration.ROUGE);
+			} else {
+				stack.changeColorCase(StackAmelioration.BLEU);
+			}
+			stack.addListener(new StackAmeliorationListenner(stack));
+			tableCase.add(stack).width(WIDTH_CASE).height(HEIGHT_CASE);
+		}
 	}
 
 	private void creerPremiereLigneMenu(Amelioration amelioration, String image, final Table tableCase) {
@@ -86,21 +107,6 @@ public class MenuAmelioration {
 		tableCase.add().height(30).expandX().fillX();
 	}
 
-	private void addElement(Amelioration amelioration, String image, final Table tableCase, boolean isVide) {
-		if (isVide) {
-			tableCase.add().width(WIDTH_CASE).height(HEIGHT_CASE);
-		} else {
-			StackAmelioration stack = new StackAmelioration(menuUpgrade, image, amelioration);
-			if (stack.amelioration.ameliorationsRequise.size() > 0) {
-				stack.changeColorCase(StackAmelioration.ROUGE);
-			} else {
-				stack.changeColorCase(StackAmelioration.BLEU);
-			}
-			stack.addListener(new StackAmeliorationListenner(stack));
-			tableCase.add(stack).width(WIDTH_CASE).height(HEIGHT_CASE);
-		}
-	}
-
 	private void creerDeuxiemeLigneMenu(Amelioration amelioration, String image, final Table tableCase) {
 		tableCase.add().height(HEIGHT_DECALAGE).expandX().fillX();
 		for (int i = 0; i < NB_CASE; i++) {
@@ -143,4 +149,65 @@ public class MenuAmelioration {
 		tableCase.add().height(30).expandX().fillX();
 	}
 
+	private void creerTroisiemeLigneMenu(Amelioration amelioration, String image, Table tableCase) {
+		tableCase.add().height(HEIGHT_DECALAGE).expandX().fillX();
+		for (int i = 0; i < NB_CASE; i++) {
+			boolean isVide = false;
+			switch (i) {
+			case 0:
+				image = "transpiration";
+				amelioration = AmeliorationManager.ameliorationSangFroid;
+				break;
+			case 2:
+				image = "transpiration";
+				amelioration = AmeliorationManager.ameliorationSangChaud;
+				break;
+			case 4:
+				image = "transpiration";
+				amelioration = AmeliorationManager.ameliorationAgressivite;
+				break;
+			case 6:
+				image = "transpiration";
+				amelioration = AmeliorationManager.ameliorationGriffe;
+				break;
+			case 8:
+				image = "transpiration";
+				amelioration = AmeliorationManager.ameliorationCroc;
+				break;
+			case 10:
+				image = "transpiration";
+				amelioration = AmeliorationManager.ameliorationJumeau;
+				break;
+			case 12:
+				image = "transpiration";
+				amelioration = AmeliorationManager.ameliorationSagesse;
+				break;
+			case 14:
+				image = "transpiration";
+				amelioration = AmeliorationManager.ameliorationVueAccrue;
+				break;
+			case 16:
+				image = "transpiration";
+				amelioration = AmeliorationManager.ameliorationLongevite;
+				break;
+			case 18:
+				image = "transpiration";
+				amelioration = AmeliorationManager.ameliorationSurvivaliste;
+				break;
+			case 20:
+				image = "transpiration";
+				amelioration = AmeliorationManager.ameliorationExplorateur;
+				break;
+			case 22:
+				image = "transpiration";
+				amelioration = AmeliorationManager.ameliorationAiles;
+				break;
+			default:
+				isVide = true;
+				break;
+			}
+			addElement(amelioration, image, tableCase, isVide);
+		}
+		tableCase.add().height(30).expandX().fillX();
+	}
 }
