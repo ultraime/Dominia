@@ -1,5 +1,7 @@
 package ultraime.game.dominia.ecran;
 
+import java.util.ArrayList;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -11,6 +13,7 @@ import com.ultraime.game.gdxtraime.parametrage.Parametre;
 
 import ultraime.game.dominia.composant.BtnAchatListenner;
 import ultraime.game.dominia.composant.StackAmelioration;
+import ultraime.game.dominia.entite.Amelioration;
 import ultraime.game.dominia.entite.Caracteristique;
 import ultraime.game.dominia.entite.Joueur;
 import ultraime.game.dominia.service.AmeliorationManager;
@@ -42,8 +45,13 @@ public class MenuUpgrade {
 	private Label lResistChaleurStat;
 	private Label lResistFroidStat;
 	private Label lVitaliteStat;
-	
+
 	private TextButton buttonValider;
+
+	/**
+	 * Element affiché dans MenuAmelioration
+	 */
+	public ArrayList<StackAmelioration> stackAmeliorations = new ArrayList<StackAmelioration>();
 
 	public MenuUpgrade(final Joueur joueur) {
 		this.joueur = joueur;
@@ -135,11 +143,11 @@ public class MenuUpgrade {
 		stageUpgrade.addActor(lResistChaleurStat);
 		stageUpgrade.addActor(lResistFroidStat);
 		stageUpgrade.addActor(lVitaliteStat);
-		
+
 		buttonValider = new TextButton(Parametre.bundle.get("txt.menu.achat"), skin);
 		buttonValider.setSize(200, 50);
 		buttonValider.setPosition(1160, 45);
-		
+
 		final BtnAchatListenner btnAchatListenner = new BtnAchatListenner(this);
 		buttonValider.addListener(btnAchatListenner);
 		stageUpgrade.addActor(buttonValider);
@@ -164,8 +172,56 @@ public class MenuUpgrade {
 		lResistChaleurStat.setVisible(isShow);
 		lVitaliteStat.setVisible(isShow);
 		lResistFroidStat.setVisible(isShow);
-		
+
 		buttonValider.setVisible(isShow);
+	}
+
+	/**
+	 * gére la couleur des stacks
+	 */
+	public void manageColor() {
+		for (int i = 0; i < stackAmeliorations.size(); i++) {
+			StackAmelioration stack = stackAmeliorations.get(i);
+			Amelioration amelioration = stack.amelioration;
+			if (joueur.ameliorations.contains(amelioration)) {
+				stack.changeColorCase(StackAmelioration.VERT);
+			} else if (amelioration.ameliorationsRequise.size() > 0) {
+				for (int j = 0; j < amelioration.ameliorationsRequise.size(); j++) {
+					if (joueur.ameliorations.contains(amelioration.ameliorationsRequise.get(j))) {
+						stack.changeColorCase(StackAmelioration.BLEU);
+					} else {
+						stack.changeColorCase(StackAmelioration.ROUGE);
+						break;
+					}
+				}
+			} else {
+				stack.changeColorCase(StackAmelioration.BLEU);
+			}
+		}
+
+	}
+
+	public void achatAmelioration() {
+		final Amelioration amelioration = stackAmelioration.amelioration;
+		boolean isValide = true;
+		if (joueur.ameliorations.contains(amelioration)) {
+			isValide = false;
+		}
+		if (isValide && amelioration.ameliorationsRequise.size() > 0) {
+			for (int i = 0; i < amelioration.ameliorationsRequise.size(); i++) {
+				if (joueur.ameliorations.contains(amelioration.ameliorationsRequise.get(i))) {
+					isValide = true;
+				} else {
+					isValide = false;
+					break;
+				}
+			}
+		}
+		if (isValide) {
+			stackAmelioration.changeColorCase(StackAmelioration.VERT);
+			joueur.ameliorations.add(amelioration);
+		}
+		manageColor();
 	}
 
 }

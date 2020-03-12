@@ -7,16 +7,15 @@ import ultraime.game.dominia.ecran.MenuUpgrade;
 
 public class BtnAchatListenner extends ClickListener {
 
-	private MenuUpgrade MenuUpgrade;
+	private MenuUpgrade menuUpgrade;
 
 	@Override
 	public void clicked(InputEvent event, float x, float y) {
-		super.clicked(event, x, y);
-
+		menuUpgrade.achatAmelioration();
 	}
 
 	public BtnAchatListenner(MenuUpgrade menuUpgrade) {
-		this.MenuUpgrade = menuUpgrade;
+		this.menuUpgrade = menuUpgrade;
 	}
 
 }

@@ -1,5 +1,7 @@
 package ultraime.game.dominia.ecran;
 
+import java.util.ArrayList;
+
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.ultraime.game.gdxtraime.parametrage.Parametre;
 
@@ -13,10 +15,17 @@ public class MenuAmelioration {
 	public static final int WIDTH_CASE = 80;
 	public static final int HEIGHT_CASE = 80;
 	public static final int HEIGHT_DECALAGE = 30;
+
 	private MenuUpgrade menuUpgrade;
+
+	/**
+	 * Element affiché
+	 */
+	public ArrayList<StackAmelioration> stackAmeliorations = new ArrayList<StackAmelioration>();
 
 	public MenuAmelioration(final MenuUpgrade menuUpgrade) {
 		this.menuUpgrade = menuUpgrade;
+		this.menuUpgrade.stackAmeliorations = stackAmeliorations;
 	}
 
 	public Table creerMenuAmelioration() {
@@ -45,7 +54,6 @@ public class MenuAmelioration {
 		tableCase.add().height(HEIGHT_DECALAGE).expandX().fillX();
 		tableCase.row();
 		creerTroisiemeLigneMenu(amelioration, image, tableCase);
-	
 
 		return tableCase;
 	}
@@ -62,6 +70,7 @@ public class MenuAmelioration {
 			}
 			stack.addListener(new StackAmeliorationListenner(stack));
 			tableCase.add(stack).width(WIDTH_CASE).height(HEIGHT_CASE);
+			stackAmeliorations.add(stack);
 		}
 	}
 

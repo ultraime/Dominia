@@ -261,10 +261,10 @@ public class AmeliorationManager {
 		ameliorationJumeau.ameliorationsRequise.add(ameliorationHormoneFertile2);
 		ameliorationSagesse.ameliorationsRequise.add(ameliorationMatiereGrise2);
 		ameliorationVueAccrue.ameliorationsRequise.add(ameliorationMatiereGrise2);
-		ameliorationLongevite.ameliorationsRequise.add(ameliorationResistance);
-		ameliorationSurvivaliste.ameliorationsRequise.add(ameliorationResistance);
-		ameliorationExplorateur.ameliorationsRequise.add(ameliorationMigrateur);
-		ameliorationAiles.ameliorationsRequise.add(ameliorationMigrateur);
+		ameliorationLongevite.ameliorationsRequise.add(ameliorationResistance2);
+		ameliorationSurvivaliste.ameliorationsRequise.add(ameliorationResistance2);
+		ameliorationExplorateur.ameliorationsRequise.add(ameliorationMigrateur2);
+		ameliorationAiles.ameliorationsRequise.add(ameliorationMigrateur2);
 		
 		ameliorations.add(ameliorationSangFroid);
 		ameliorations.add(ameliorationSangChaud);

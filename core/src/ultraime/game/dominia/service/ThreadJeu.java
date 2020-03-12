@@ -23,12 +23,11 @@ public class ThreadJeu implements Runnable {
 	public void run() {
 		do {
 			boolean isPause = Parametre.PAUSE;
-		
+
 			if (!isPause) {
 				try {
-					if (Parametre.MODE_DEBUG_SYSO) {
-						BOUCLE++;
-					}
+					BOUCLE++;
+
 					int timeToSleep = 1000 / Parametre.VITESSE_DE_JEU;
 					Thread.sleep(timeToSleep);
 					for (int i = 0; i < this.jeuService.joueurs.size(); i++) {
@@ -57,6 +56,14 @@ public class ThreadJeu implements Runnable {
 									System.out.println("Boucle : " + BOUCLE + " population zone[" + x + "][" + y
 											+ "] = " + nbPerso);
 								}
+								if (Parametre.MODE_DEBUG_SYSO_MOY) {
+									if (x == 2 && y == 7)
+										System.out
+												.println("Boucle : " + BOUCLE + " zone[" + x + "][" + y + "] = "
+														+ this.jeuService.zones[x][y]
+																.getCaracteristiqueMoyenFromJoueur(idJoueur)
+																.toString());
+								}
 							}
 						}
 						if (Parametre.MODE_DEBUG_SYSO) {
@@ -68,7 +75,7 @@ public class ThreadJeu implements Runnable {
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
-			}else{
+			} else {
 				System.out.print(Parametre.PAUSE);
 			}
 		} while (Gdx.app != null);

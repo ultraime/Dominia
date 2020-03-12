@@ -62,7 +62,7 @@ public class StackAmelioration extends Stack {
 	}
 
 	public void changeColorCase(final int color) {
-		clear();
+		clearChildren();
 		add(imgCadre[color]);
 		add(img[color]);
 		this.color = color;
