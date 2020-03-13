@@ -20,6 +20,7 @@ import com.ultraime.game.gdxtraime.ecran.EcranManagerAbstract;
 import com.ultraime.game.gdxtraime.parametrage.Parametre;
 
 import ultraime.game.dominia.composant.LabelListenner;
+import ultraime.game.dominia.ecran.menu.MenuHud;
 import ultraime.game.dominia.entite.Zone;
 import ultraime.game.dominia.service.AmeliorationManager;
 import ultraime.game.dominia.service.JeuService;
@@ -44,6 +45,8 @@ public class EcranGame extends Ecran {
 	// Jeu
 	public JeuService jeuService;
 	private ArrayList<Label> labelZone = new ArrayList<Label>();
+	
+	private MenuHud menuInfosRegion;
 
 	@Override
 	public void changerEcran(InputMultiplexer inputMultiplexer) {
@@ -71,40 +74,17 @@ public class EcranGame extends Ecran {
 
 		resize(1920,1080);
 		skin = new Skin(Gdx.files.internal("ui-editor/neonuiblue/neonuiblue.json"));
-
+		
+		//HUD + menu info zone
+		menuInfosRegion = new MenuHud();
+		menuInfosRegion.createStage(stageHUD);
+		
 		// FOND
 		Table tableFond = new Table();
 		tableFond.setFillParent(true);
 		Image imgFond = new Image(new Texture(Gdx.files.internal("logo/fond.png")));
 		tableFond.add(imgFond).expand().fill();
 		stageFond.addActor(tableFond);
-
-		// HUD
-		Table table = new Table();
-		table.setFillParent(true);
-		table.setDebug(Parametre.MODE_DEBUG);
-
-		table.top();
-		table.add().expandX().fillX();
-		Texture barre = new Texture(Gdx.files.internal("logo/barre_1.png"));
-		Image img = new Image(new Texture(Gdx.files.internal("logo/joueur_0_logo.png")));
-
-		table.add(img).width(50).height(50);
-
-		table.add(new Image(barre)).width(100).height(50);
-		table.add(new Label("E2 IMG", skin)).width(50).height(50);
-		table.add(new Label("E2 %WIN", skin)).width(100).height(30);
-		table.add(new Label("E3 IMG", skin)).width(50).height(50);
-		table.add(new Label("E3 %WIN", skin)).width(100).height(30);
-		table.add(new Label("E4 IMG", skin)).width(50).height(50);
-		table.add(new Label("E4 %WIN", skin)).width(100).height(30);
-		table.add(new Label("E5 IMG", skin)).width(50).height(50);
-		table.add(new Label("E5 %WIN", skin)).width(100).height(30);
-		table.add().expandX().fillX();
-		table.row();
-
-		stageHUD.addActor(table);
-		stageHUD.setDebugAll(Parametre.MODE_DEBUG);
 
 		// STAGE CARTE BACKGROUND
 		Table tableBackground = new Table();
@@ -126,7 +106,7 @@ public class EcranGame extends Ecran {
 		tableCarte.top();
 		tableCarte.add().expandX().fillX().height(50);
 
-		// cr�ation du plateau (m�tier)
+		// cr�ation du plateau (métier)
 		jeuService = new JeuService();
 		this.jeuService.zones = new Zone[7][13];
 		for (int i = 0; i < 7; i++) {
@@ -135,7 +115,7 @@ public class EcranGame extends Ecran {
 			for (int j = 0; j < 13; j++) {
 				final Zone zone = this.jeuService.genererZone(i, j);
 				Label label = new Label("[" + i + "][" + j + "]", skin);
-				label.addListener(new LabelListenner(zone, i, j, this.jeuService.joueurs));
+				label.addListener(new LabelListenner(zone, i, j, this.jeuService.joueurs,menuInfosRegion));
 				labelZone.add(label);
 				tableCarte.add(label).width(128).height(128);
 			}
@@ -166,7 +146,6 @@ public class EcranGame extends Ecran {
 		stageBoutonBas.addActor(tableBtnBas);
 
 		// lance le jeu
-		
 		jeuService.startGame(1);
 		resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 	}
@@ -196,8 +175,8 @@ public class EcranGame extends Ecran {
 			stageBoutonBas.act(Gdx.graphics.getDeltaTime());
 
 			stageFond.draw();
-			stageHUD.draw();
 			stageCarte.draw();
+			stageHUD.draw();
 			stageBoutonBas.draw();
 
 		} catch (Exception e) {
@@ -231,6 +210,7 @@ public class EcranGame extends Ecran {
 
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+		menuInfosRegion.showMenu(false);
 		return false;
 	}
 

@@ -1,4 +1,4 @@
-package ultraime.game.dominia.ecran;
+package ultraime.game.dominia.ecran.menu;
 
 import java.util.ArrayList;
 
@@ -18,7 +18,7 @@ import ultraime.game.dominia.entite.Caracteristique;
 import ultraime.game.dominia.entite.Joueur;
 import ultraime.game.dominia.service.AmeliorationManager;
 
-public class MenuUpgrade {
+public class MenuAchatAmelioration {
 
 	public final static int WIDTH_LABEL = 100;
 	public final static int HEIGHT_LABEL = 30;
@@ -49,11 +49,11 @@ public class MenuUpgrade {
 	private TextButton buttonValider;
 
 	/**
-	 * Element affiché dans MenuAmelioration
+	 * Element affichï¿½ dans MenuAmelioration
 	 */
 	public ArrayList<StackAmelioration> stackAmeliorations = new ArrayList<StackAmelioration>();
 
-	public MenuUpgrade(final Joueur joueur) {
+	public MenuAchatAmelioration(final Joueur joueur) {
 		this.joueur = joueur;
 	}
 
@@ -177,7 +177,7 @@ public class MenuUpgrade {
 	}
 
 	/**
-	 * gére la couleur des stacks
+	 * gï¿½re la couleur des stacks
 	 */
 	public void manageColor() {
 		for (int i = 0; i < stackAmeliorations.size(); i++) {

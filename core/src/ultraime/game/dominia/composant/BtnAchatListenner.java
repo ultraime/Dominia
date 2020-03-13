@@ -3,18 +3,18 @@ package ultraime.game.dominia.composant;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
-import ultraime.game.dominia.ecran.MenuUpgrade;
+import ultraime.game.dominia.ecran.menu.MenuAchatAmelioration;
 
 public class BtnAchatListenner extends ClickListener {
 
-	private MenuUpgrade menuUpgrade;
+	private MenuAchatAmelioration menuUpgrade;
 
 	@Override
 	public void clicked(InputEvent event, float x, float y) {
 		menuUpgrade.achatAmelioration();
 	}
 
-	public BtnAchatListenner(MenuUpgrade menuUpgrade) {
+	public BtnAchatListenner(MenuAchatAmelioration menuUpgrade) {
 		this.menuUpgrade = menuUpgrade;
 	}
 

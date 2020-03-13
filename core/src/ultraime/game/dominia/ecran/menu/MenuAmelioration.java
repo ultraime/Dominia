@@ -1,4 +1,4 @@
-package ultraime.game.dominia.ecran;
+package ultraime.game.dominia.ecran.menu;
 
 import java.util.ArrayList;
 
@@ -16,14 +16,14 @@ public class MenuAmelioration {
 	public static final int HEIGHT_CASE = 80;
 	public static final int HEIGHT_DECALAGE = 30;
 
-	private MenuUpgrade menuUpgrade;
+	private MenuAchatAmelioration menuUpgrade;
 
 	/**
-	 * Element affiché
+	 * Element affichï¿½
 	 */
 	public ArrayList<StackAmelioration> stackAmeliorations = new ArrayList<StackAmelioration>();
 
-	public MenuAmelioration(final MenuUpgrade menuUpgrade) {
+	public MenuAmelioration(final MenuAchatAmelioration menuUpgrade) {
 		this.menuUpgrade = menuUpgrade;
 		this.menuUpgrade.stackAmeliorations = stackAmeliorations;
 	}

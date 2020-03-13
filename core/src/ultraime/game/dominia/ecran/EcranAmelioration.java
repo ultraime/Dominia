@@ -14,6 +14,9 @@ import com.ultraime.game.gdxtraime.ecran.Ecran;
 import com.ultraime.game.gdxtraime.ecran.EcranManagerAbstract;
 import com.ultraime.game.gdxtraime.parametrage.Parametre;
 
+import ultraime.game.dominia.ecran.menu.MenuAmelioration;
+import ultraime.game.dominia.ecran.menu.MenuAchatAmelioration;
+
 /**
  * @author ultraime Ecran de base pour d�marrer une partie
  */
@@ -25,7 +28,7 @@ public class EcranAmelioration extends Ecran {
 	private Skin skin;
 
 	private MenuAmelioration menuAmelioration;
-	private MenuUpgrade menuUpgrade;
+	private MenuAchatAmelioration menuUpgrade;
 
 	@Override
 	public void changerEcran(InputMultiplexer inputMultiplexer) {
@@ -70,7 +73,7 @@ public class EcranAmelioration extends Ecran {
 		stageBoutonBas.addActor(tableBtnBas);
 
 
-		menuUpgrade = new MenuUpgrade(ecranManager.ecranGame.jeuService.joueurs.get(0));
+		menuUpgrade = new MenuAchatAmelioration(ecranManager.ecranGame.jeuService.joueurs.get(0));
 		menuUpgrade.createSDtage(stageUpgrade);
 		menuUpgrade.showMenu(false);
 		
